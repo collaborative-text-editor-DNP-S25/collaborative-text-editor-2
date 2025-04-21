@@ -1,14 +1,6 @@
 import { DocumentRepository } from '../domain/repositories/DocumentRepository';
 
 export class DocumentRepositoryImpl implements DocumentRepository {
-    io = require("socket.io")(3001, {
-        cors: {
-            origin: "http://localhost:3000",
-            methods: ["GET", "POST"],
-        },
-    })
-
-
     async createDocument(): Promise<string> {
         // TODO: implement create doc functionality
         return new Promise((resolve, reject) => {
