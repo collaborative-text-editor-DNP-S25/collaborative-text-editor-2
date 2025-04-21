@@ -20,5 +20,8 @@
   "homepage": "https://github.com/collaborative-text-editor-DNP-S25/collaborative-text-editor#readme",
   "dependencies": {
     "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3"
   }
 }
