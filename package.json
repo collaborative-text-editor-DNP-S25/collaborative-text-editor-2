@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/collaborative-text-editor-DNP-S25/collaborative-text-editor/issues"
   },
-  "homepage": "https://github.com/collaborative-text-editor-DNP-S25/collaborative-text-editor#readme"
+  "homepage": "https://github.com/collaborative-text-editor-DNP-S25/collaborative-text-editor#readme",
+  "dependencies": {
+    "socket.io": "^4.8.1"
+  }
 }
