@@ -1,4 +1,4 @@
-import { DocumentRepository } from '../domain/DocumentRepositories';
+import { DocumentRepository } from '../domain/repositories/DocumentRepository';
 
 export class DocumentRepositoryImpl implements DocumentRepository {
     io = require("socket.io")(3001, {
@@ -9,22 +9,22 @@ export class DocumentRepositoryImpl implements DocumentRepository {
     })
 
 
-    createDocument(): Promise<string> {
-        // TODO: implement create doc implementation
+    async createDocument(): Promise<string> {
+        // TODO: implement create doc functionality
         return new Promise((resolve, reject) => {
             const documentId = "1";
             resolve(documentId);
         });
     }
 
-    getDocument(docId: string): Promise<Document | null> {
+    async getDocument(docId: string): Promise<Document | null> {
         return new Promise((resolve, reject) => {
             // TODO: implement get doc functionality
             resolve(null);
         });
     }
 
-    updateDocument(docId: string, document: Document): Promise<void> {
+    async updateDocument(docId: string, document: Document): Promise<void> {
         return new Promise((resolve, reject) => {
             // TODO: implement update doc functionality
             resolve();
