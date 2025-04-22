@@ -1,11 +1,11 @@
-import { DocumentId } from "../domain/Document";
+import { type DocumentId } from "$lib/backend/domain/Document";
 import {
-  Client,
-  Message,
-  SocketRepository,
-} from "../domain/repositories/SocketRepository";
+  type Client,
+  type Message,
+  type SocketRepository,
+} from "$lib/backend/domain/repositories/SocketRepository";
 
-export class SocketRepositoryImpl implements SocketRepository {
+export default class SocketRepositoryImpl implements SocketRepository {
   async broadcast(docId: DocumentId, message: Message): Promise<void> {
     // TODO: implement broadcast functionality
     throw undefined;
