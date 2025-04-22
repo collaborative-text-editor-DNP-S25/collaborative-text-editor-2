@@ -1,7 +1,7 @@
-import { DocumentRepositoryImpl } from '../data/DocumentRepositoryImpl';
-import { SocketRepositoryImpl } from '../data/SocketRepositoryImpl';
+import { DocumentRepositoryImpl } from "../data/DocumentRepositoryImpl";
+import { SocketRepositoryImpl } from "../data/SocketRepositoryImpl";
 
 class MainApiClass {
-    docRepo = new DocumentRepositoryImpl();
-    sockRepo = new SocketRepositoryImpl();
+  docRepo = new DocumentRepositoryImpl();
+  sockRepo = new SocketRepositoryImpl();
 }

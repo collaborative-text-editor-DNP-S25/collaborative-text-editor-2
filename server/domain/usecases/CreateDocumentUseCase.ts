@@ -1,3 +1,3 @@
 export class CreateToDocumenUseCase {
-    // TODO: implement use case
+  // TODO: implement use case
 }

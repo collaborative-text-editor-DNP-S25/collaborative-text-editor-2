@@ -1,3 +1,3 @@
 export class DeleteDocumenUseCase {
-    // TODO: implement use case
+  // TODO: implement use case
 }
