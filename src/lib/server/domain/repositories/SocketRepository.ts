@@ -1,4 +1,4 @@
-import { type DocumentId } from "$lib/backend/domain/Document";
+import { type DocumentId } from "$lib/server/domain/Document";
 
 export type Message = string;
 export type Client = WebSocket;
