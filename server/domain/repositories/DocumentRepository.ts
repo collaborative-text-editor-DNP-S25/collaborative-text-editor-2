@@ -1,7 +1,10 @@
+import { DocumentId } from "../Document";
+
 export interface DocumentRepository {
-  createDocument(): Promise<string>;
-  getDocument(docId: string): Promise<Document | null>;
-  updateDocument(docId: string, document: Document): Promise<void>;
-  deleteDocument(docId: string): Promise<string>;
-  // TODO: declare methods for version history and deletion
+  createDocument(): Promise<DocumentId>;
+  getDocument(docId: DocumentId): Promise<Document | undefined>;
+  updateDocument(docId: DocumentId, document: Document): Promise<void>;
+  deleteDocument(docId: DocumentId): Promise<DocumentId>;
+
+  // TODO: declare methods for version history
 }

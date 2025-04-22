@@ -1,5 +1,10 @@
+import { DocumentId } from "../Document";
+
+export type Message = string;
+export type Client = WebSocket;
+
 export interface SocketRepository {
-  broadcast(docId: string, message: any): Promise<void>;
-  registerClient(client: any, docId: string): void;
-  unregisterClient(client: any): void;
+  broadcast(docId: DocumentId, message: Message): Promise<void>;
+  registerClient(client: Client, docId: DocumentId): Promise<void>;
+  unregisterClient(client: Client): Promise<void>;
 }

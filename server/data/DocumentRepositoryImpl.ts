@@ -1,30 +1,24 @@
+import { DocumentId } from "../domain/Document";
 import { DocumentRepository } from "../domain/repositories/DocumentRepository";
 
 export class DocumentRepositoryImpl implements DocumentRepository {
-  async createDocument(): Promise<string> {
+  async createDocument(): Promise<DocumentId> {
     // TODO: implement create doc functionality
-    return new Promise((resolve, reject) => {
-      const documentId = "1";
-      resolve(documentId);
-    });
+    throw undefined;
   }
 
-  async getDocument(docId: string): Promise<Document | null> {
-    return new Promise((resolve, reject) => {
-      // TODO: implement get doc functionality
-      resolve(null);
-    });
+  async getDocument(docId: DocumentId): Promise<Document | undefined> {
+    // TODO: implement get doc functionality
+    throw undefined;
   }
 
-  async updateDocument(docId: string, document: Document): Promise<void> {
-    return new Promise((resolve, reject) => {
-      // TODO: implement update doc functionality
-      resolve();
-    });
+  async updateDocument(docId: DocumentId, document: Document): Promise<void> {
+    // TODO: implement update doc functionality
+    throw undefined;
   }
-  deleteDocument(docId: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      // TODO: implement delete doc functionality
-    });
+
+  deleteDocument(docId: DocumentId): Promise<DocumentId> {
+    // TODO: implement delete doc functionality
+    throw undefined;
   }
 }

@@ -1,15 +1,23 @@
-import { SocketRepository } from "../domain/repositories/SocketRepository";
+import { DocumentId } from "../domain/Document";
+import {
+  Client,
+  Message,
+  SocketRepository,
+} from "../domain/repositories/SocketRepository";
 
 export class SocketRepositoryImpl implements SocketRepository {
-  async broadcast(docId: string, message: any): Promise<void> {
+  async broadcast(docId: DocumentId, message: Message): Promise<void> {
     // TODO: implement broadcast functionality
+    throw undefined;
   }
 
-  registerClient(client: WebSocket, docId: string): void {
+  registerClient(client: Client, docId: DocumentId): Promise<void> {
     // TODO: implement regidter client functionality
+    throw undefined;
   }
 
-  unregisterClient(client: WebSocket): void {
+  unregisterClient(client: Client): Promise<void> {
     // TODO: implement unregidter client functionality
+    throw undefined;
   }
 }

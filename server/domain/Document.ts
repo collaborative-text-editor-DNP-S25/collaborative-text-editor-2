@@ -1,6 +1,8 @@
+export type DocumentId = string;
+
 export interface Document {
-  id: string;
+  id: DocumentId;
   content: string;
-  timestamp: string; // string for now
+  timestamp: Date;
   // TODO: declare fields for version history
 }
