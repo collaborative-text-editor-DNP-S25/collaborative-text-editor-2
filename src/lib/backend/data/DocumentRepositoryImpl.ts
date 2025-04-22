@@ -1,7 +1,7 @@
-import { DocumentId } from "../domain/Document";
-import { DocumentRepository } from "../domain/repositories/DocumentRepository";
+import { type DocumentId } from "$lib/backend/domain/Document";
+import { type DocumentRepository } from "$lib/backend/domain/repositories/DocumentRepository";
 
-export class DocumentRepositoryImpl implements DocumentRepository {
+export default class DocumentRepositoryImpl implements DocumentRepository {
   async createDocument(): Promise<DocumentId> {
     // TODO: implement create doc functionality
     throw undefined;
