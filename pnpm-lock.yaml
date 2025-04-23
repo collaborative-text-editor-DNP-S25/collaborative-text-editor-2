@@ -15,6 +15,9 @@ importers:
         specifier: ^4.8.1
         version: 4.8.1
     devDependencies:
+      '@catppuccin/tailwindcss':
+        specifier: 1.0.0-beta.1
+        version: 1.0.0-beta.1
       '@eslint/compat':
         specifier: ^1.2.5
         version: 1.2.8(eslint@9.25.1(jiti@2.4.2))
@@ -108,6 +111,10 @@ packages:
   '@babel/runtime@7.27.0':
     resolution: {integrity: sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==}
     engines: {node: '>=6.9.0'}
+
+  '@catppuccin/tailwindcss@1.0.0-beta.1':
+    resolution: {integrity: sha512-+mnOXw8JAT0Kz+KDi0dMM16YJMTC+N0yTzOU5n3b3ibUQFv4DQTVPYAx+P7iKfSwG+5w4gZ4+kupQQHKkcXnFg==}
+    engines: {node: '>=22.0.0'}
 
   '@csstools/color-helpers@5.0.2':
     resolution: {integrity: sha512-JqWH1vsgdGcw2RR6VliXXdA0/59LttzlU8UlRT/iUUsEeWfYq8I+K0yhihEUTTHLRm1EXvpsCx3083EU15ecsA==}
@@ -2070,6 +2077,8 @@ snapshots:
   '@babel/runtime@7.27.0':
     dependencies:
       regenerator-runtime: 0.14.1
+
+  '@catppuccin/tailwindcss@1.0.0-beta.1': {}
 
   '@csstools/color-helpers@5.0.2': {}
 

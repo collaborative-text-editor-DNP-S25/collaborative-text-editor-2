@@ -1,5 +1,6 @@
 @import "tailwindcss";
+@import "@catppuccin/tailwindcss/config.css";
 
 body {
-  @apply h-screen w-screen;
+  @apply bg-ctp-base text-ctp-text h-screen w-screen;
 }
