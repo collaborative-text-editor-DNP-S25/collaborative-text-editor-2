@@ -54,6 +54,9 @@ importers:
       globals:
         specifier: ^16.0.0
         version: 16.0.0
+      jiti:
+        specifier: ^2.4.2
+        version: 2.4.2
       jsdom:
         specifier: ^26.0.0
         version: 26.1.0
