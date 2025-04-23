@@ -4,21 +4,21 @@ import { type DocumentRepository } from "$lib/server/domain/repositories/Documen
 export default class DocumentRepositoryImpl implements DocumentRepository {
   async createDocument(): Promise<DocumentId> {
     // TODO: implement create doc functionality
-    throw undefined;
+    throw new Error();
   }
 
   async getDocument(docId: DocumentId): Promise<Document | undefined> {
     // TODO: implement get doc functionality
-    throw undefined;
+    throw new Error();
   }
 
   async updateDocument(docId: DocumentId, document: Document): Promise<void> {
     // TODO: implement update doc functionality
-    throw undefined;
+    throw new Error();
   }
 
   deleteDocument(docId: DocumentId): Promise<DocumentId> {
     // TODO: implement delete doc functionality
-    throw undefined;
+    throw new Error();
   }
 }

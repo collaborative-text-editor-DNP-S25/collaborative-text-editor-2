@@ -8,16 +8,16 @@ import {
 export default class SocketRepositoryImpl implements SocketRepository {
   async broadcast(docId: DocumentId, message: Message): Promise<void> {
     // TODO: implement broadcast functionality
-    throw undefined;
+    throw new Error();
   }
 
   registerClient(client: Client, docId: DocumentId): Promise<void> {
     // TODO: implement regidter client functionality
-    throw undefined;
+    throw new Error();
   }
 
   unregisterClient(client: Client): Promise<void> {
     // TODO: implement unregidter client functionality
-    throw undefined;
+    throw new Error();
   }
 }
