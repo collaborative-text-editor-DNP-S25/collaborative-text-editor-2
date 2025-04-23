@@ -1,5 +1,5 @@
-<h1>Welcome to SvelteKit</h1>
-<p>
-  Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the
-  documentation
-</p>
+<main class="flex h-full w-full p-4">
+  <textarea
+    class="h-full w-full resize-none rounded-xl border-2 border-gray-300 p-2 outline-none focus:border-black"
+  ></textarea>
+</main>
