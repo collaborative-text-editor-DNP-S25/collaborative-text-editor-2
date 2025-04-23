@@ -11,12 +11,12 @@ export default class SocketRepositoryImpl implements SocketRepository {
     throw new Error();
   }
 
-  registerClient(client: Client, docId: DocumentId): Promise<void> {
+  async registerClient(client: Client, docId: DocumentId): Promise<void> {
     // TODO: implement regidter client functionality
     throw new Error();
   }
 
-  unregisterClient(client: Client): Promise<void> {
+  async unregisterClient(client: Client): Promise<void> {
     // TODO: implement unregidter client functionality
     throw new Error();
   }

@@ -17,7 +17,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     throw new Error();
   }
 
-  deleteDocument(docId: DocumentId): Promise<DocumentId> {
+  async deleteDocument(docId: DocumentId): Promise<DocumentId> {
     // TODO: implement delete doc functionality
     throw new Error();
   }
