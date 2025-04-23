@@ -21,6 +21,10 @@ export default ts.config(
   {
     languageOptions: {
       globals: { ...globals.browser, ...globals.node },
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: { "no-undef": "off" },
   },
