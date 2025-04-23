@@ -1,0 +1,7 @@
+{
+  "languages": {
+    "Svelte": {
+      "language_servers": ["svelte-language-server", "..."]
+    }
+  }
+}
