@@ -9,9 +9,15 @@ import {
 } from "$lib/server/domain/repositories/SocketRepository";
 import { Server } from "socket.io";
 
-
 export default class SocketRepositoryImpl implements SocketRepository {
-  constructor(private io: Server<ClientToServerEvents, ServerToClientEvents, never, SubscriberData>) {}
+  constructor(
+    private io: Server<
+      ClientToServerEvents,
+      ServerToClientEvents,
+      never,
+      SubscriberData
+    >,
+  ) {}
 
   broadcast(docId: DocumentId, message: Message): void {
     this.io.to(docId).emit("sendMessage", message);
@@ -22,7 +28,10 @@ export default class SocketRepositoryImpl implements SocketRepository {
     client.data.docId = docId;
   }
 
-  async unregisterClient(client: SocketClient, docId: DocumentId): Promise<void> {
+  async unregisterClient(
+    client: SocketClient,
+    docId: DocumentId,
+  ): Promise<void> {
     await client.leave(docId);
     client.data.docId = "";
   }

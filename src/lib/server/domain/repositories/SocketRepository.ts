@@ -1,7 +1,6 @@
 import { type DocumentId } from "$lib/server/domain/entities/Document";
 import type { SocketClient } from "$lib/server/domain/entities/SocketClient";
 
-
 export type Message = string;
 
 export interface SocketRepository {
