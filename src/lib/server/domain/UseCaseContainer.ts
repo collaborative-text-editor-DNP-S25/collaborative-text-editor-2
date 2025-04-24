@@ -1,5 +1,5 @@
-import { type DocumentRepository } from "$lib/server/domain/repositories/DocumentRepository";
-import { type SocketRepository } from "$lib/server/domain/repositories/SocketRepository";
+import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
+import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import ConnectToDocumentUseCase from "$lib/server/domain/usecases/ConnectToDocumentUseCase";
 import CreateDocumentUseCase from "$lib/server/domain/usecases/CreateDocumentUseCase";
 import DeleteDocumentUseCase from "$lib/server/domain/usecases/DeleteDocumentUseCase";

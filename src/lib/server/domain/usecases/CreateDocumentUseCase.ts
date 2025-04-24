@@ -1,4 +1,4 @@
-import type DocumentRepositoryImpl from "$lib/server/data/DocumentRepositoryImpl";
+import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 
 export default class CreateToDocumenUseCase {
   constructor(private documentRepo: DocumentRepository) {}

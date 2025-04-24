@@ -1,5 +1,5 @@
-import type DocumentRepositoryImpl from "$lib/server/data/DocumentRepositoryImpl";
-import type SocketRepositoryImpl from "$lib/server/data/SocketRepositoryImpl";
+import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
+import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 
 export default class UpdateDocumenUseCase {
   constructor(
