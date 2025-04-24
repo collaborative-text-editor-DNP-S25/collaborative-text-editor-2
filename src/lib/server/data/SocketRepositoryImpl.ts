@@ -3,10 +3,8 @@ import { type ClientToServerEvents } from "$lib/server/domain/entities/events/Cl
 import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
 import type { SocketClient } from "$lib/server/domain/entities/SocketClient";
 import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
-import {
-  type Message,
-  type SocketRepository,
-} from "$lib/server/domain/repositories/SocketRepository";
+import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
+import type { Message } from "$lib/server/domain/repositories/SocketRepository";
 import { Server } from "socket.io";
 
 export default class SocketRepositoryImpl implements SocketRepository {
