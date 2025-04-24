@@ -1,4 +1,7 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
+import {
+  type DocumentId,
+  type DocumentContent,
+} from "$lib/server/domain/entities/Document";
 import {
   type Client,
   type Message,
@@ -6,7 +9,10 @@ import {
 } from "$lib/server/domain/repositories/SocketRepository";
 
 export default class SocketRepositoryImpl implements SocketRepository {
-  async broadcast(docId: DocumentId, message: Message): Promise<void> {
+  async broadcast(
+    docContent: DocumentContent,
+    message: Message,
+  ): Promise<void> {
     // TODO: implement broadcast functionality
     throw new Error();
   }
@@ -16,7 +22,7 @@ export default class SocketRepositoryImpl implements SocketRepository {
     throw new Error();
   }
 
-  async unregisterClient(client: Client): Promise<void> {
+  async unregisterClient(client: Client, docId: DocumentId): Promise<void> {
     // TODO: implement unregidter client functionality
     throw new Error();
   }
