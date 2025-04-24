@@ -9,6 +9,7 @@ import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
 import express, { type Express } from "express";
 import { createServer, type Server as HttpServer } from "http";
 import { Server } from "socket.io";
+import type { SocketClient } from "$lib/server/domain/entities/SocketClient";
 
 export default class MainApi {
   app: Express;
@@ -40,6 +41,34 @@ export default class MainApi {
       this.documentRepo,
       this.socketRepo,
     );
+    this.setupSocketHandlers();
+  }
+
+  private setupSocketHandlers() {
+    this.io.on("connection", (socket: SocketClient) => {
+      console.log(`Client connected: ${socket.id}`);
+
+      socket.on("enterDocument", async (docId) => {
+        await this.useCaseContainer.enterDocument.invoke(socket, docId);
+      });
+
+      socket.on("exitDocument", async (docId) => {
+        await this.useCaseContainer.exitDocument.invoke(socket, docId);
+      });
+
+      socket.on("disconnect", async () => {
+        if (socket.data.docId) {
+          await this.useCaseContainer.exitDocument.invoke(
+            socket,
+            socket.data.docId,
+          );
+        }
+      });
+
+      socket.on("updateDocument", (docId, newContent) => {
+        this.useCaseContainer.updateDocument.invoke(docId, newContent);
+      });
+    });
   }
 
   start(port: number) {

@@ -1,6 +1,7 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
+import { type DocumentContent, type DocumentId } from "$lib/server/domain/entities/Document";
 
 export interface ClientToServerEvents {
-  register: (docId: DocumentId) => void;
-  unregister: (docId: DocumentId) => void;
+  enterDocument: (docId: DocumentId) => void;
+  exitDocument: (docId: DocumentId) => void;
+  updateDocument: (docId: DocumentId, newContent: DocumentContent) => void;
 }
