@@ -1,5 +1,4 @@
-import { type Handle } from "@sveltejs/kit";
-import type { ServerInit } from "@sveltejs/kit";
+import { type Handle, type ServerInit } from "@sveltejs/kit";
 
 import { paraglideMiddleware } from "$lib/paraglide/server";
 

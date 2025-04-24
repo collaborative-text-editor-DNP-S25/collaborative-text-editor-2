@@ -1,4 +1,4 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
+import { type DocumentId } from "./Document";
 
 export interface SubscriberData {
   docId: DocumentId;

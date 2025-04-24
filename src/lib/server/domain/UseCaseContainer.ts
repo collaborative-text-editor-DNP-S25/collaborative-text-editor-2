@@ -1,15 +1,15 @@
-import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
-import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
-import EnterDocumentUseCase from "$lib/server/domain/usecases/EnterDocumentUseCase";
-import CreateDocumentUseCase from "$lib/server/domain/usecases/CreateDocumentUseCase";
-import DeleteDocumentUseCase from "$lib/server/domain/usecases/DeleteDocumentUseCase";
-import ExitDocumentUseCase from "$lib/server/domain/usecases/ExitDocumentUseCase";
+import type DocumentRepository from "./repositories/DocumentRepository";
+import type SocketRepository from "./repositories/SocketRepository";
+import CreateDocumentUseCase from "./usecases/CreateDocumentUseCase";
+import DeleteDocumentUseCase from "./usecases/DeleteDocumentUseCase";
+import EnterDocumentUseCase from "./usecases/EnterDocumentUseCase";
+import ExitDocumentUseCase from "./usecases/ExitDocumentUseCase";
 import UpdateDocumenUseCase from "./usecases/UpdateDocumentUseCase";
 
 export default class UseCaseContainer {
-  enterDocument: EnterDocumentUseCase;
   createDocument: CreateDocumentUseCase;
   deleteDocument: DeleteDocumentUseCase;
+  enterDocument: EnterDocumentUseCase;
   exitDocument: ExitDocumentUseCase;
   updateDocument: UpdateDocumenUseCase;
 

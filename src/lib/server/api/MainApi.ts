@@ -1,20 +1,26 @@
+import express, { type Express } from "express";
+import { createServer, type Server as HttpServer } from "http";
+import { Server as IoServer } from "socket.io";
+
 import DocumentRepositoryImpl from "$lib/server/data/DocumentRepositoryImpl";
 import SocketRepositoryImpl from "$lib/server/data/SocketRepositoryImpl";
 import { type ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
 import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
+import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
 import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
-import express, { type Express } from "express";
-import { createServer, type Server as HttpServer } from "http";
-import { Server } from "socket.io";
-import type { SocketClient } from "$lib/server/domain/entities/SocketClient";
 
 export default class MainApi {
   app: Express;
   server: HttpServer;
-  io: Server<ClientToServerEvents, ServerToClientEvents, never, SubscriberData>;
+  io: IoServer<
+    ClientToServerEvents,
+    ServerToClientEvents,
+    never,
+    SubscriberData
+  >;
 
   documentRepo: DocumentRepository;
   socketRepo: SocketRepository;
@@ -23,7 +29,7 @@ export default class MainApi {
   constructor() {
     this.app = express();
     this.server = createServer();
-    this.io = new Server<
+    this.io = new IoServer<
       ClientToServerEvents,
       ServerToClientEvents,
       never,
@@ -44,7 +50,7 @@ export default class MainApi {
     this.setupSocketHandlers();
   }
 
-  private setupSocketHandlers() {
+  private setupSocketHandlers(): void {
     this.io.on("connection", (socket: SocketClient) => {
       console.log(`Client connected: ${socket.id}`);
 
@@ -71,7 +77,7 @@ export default class MainApi {
     });
   }
 
-  start(port: number) {
+  start(port: number): void {
     this.server.listen(port, () => {
       console.log(`Server started on port: ${port.toString()}`);
     });
