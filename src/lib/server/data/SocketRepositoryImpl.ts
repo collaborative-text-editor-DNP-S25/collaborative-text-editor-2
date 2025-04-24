@@ -1,29 +1,36 @@
-import {
-  type DocumentId,
-  type DocumentContent,
-} from "$lib/server/domain/entities/Document";
-import {
-  type Client,
-  type Message,
-  type SocketRepository,
-} from "$lib/server/domain/repositories/SocketRepository";
+import { type DocumentId } from "$lib/server/domain/entities/Document";
+import { type ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
+import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
+import type { SocketClient } from "$lib/server/domain/entities/SocketClient";
+import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
+import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
+import type { Message } from "$lib/server/domain/repositories/SocketRepository";
+import { Server } from "socket.io";
 
 export default class SocketRepositoryImpl implements SocketRepository {
-  async broadcast(
-    docContent: DocumentContent,
-    message: Message,
+  constructor(
+    private io: Server<
+      ClientToServerEvents,
+      ServerToClientEvents,
+      never,
+      SubscriberData
+    >,
+  ) {}
+
+  broadcast(docId: DocumentId, message: Message): void {
+    this.io.to(docId).emit("sendMessage", message);
+  }
+
+  async registerClient(client: SocketClient, docId: DocumentId): Promise<void> {
+    await client.join(docId);
+    client.data.docId = docId;
+  }
+
+  async unregisterClient(
+    client: SocketClient,
+    docId: DocumentId,
   ): Promise<void> {
-    // TODO: implement broadcast functionality
-    throw new Error();
-  }
-
-  async registerClient(client: Client, docId: DocumentId): Promise<void> {
-    // TODO: implement regidter client functionality
-    throw new Error();
-  }
-
-  async unregisterClient(client: Client, docId: DocumentId): Promise<void> {
-    // TODO: implement unregidter client functionality
-    throw new Error();
+    await client.leave(docId);
+    client.data.docId = "";
   }
 }

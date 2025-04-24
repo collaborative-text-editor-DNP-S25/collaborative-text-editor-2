@@ -1,6 +1,6 @@
 import { type DocumentId } from "$lib/server/domain/entities/Document";
 
-export interface DocumentRepository {
+export default interface DocumentRepository {
   createDocument(): Promise<DocumentId>;
   getDocument(docId: DocumentId): Promise<Document | undefined>;
   updateDocument(docId: DocumentId, document: Document): Promise<void>;

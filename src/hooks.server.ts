@@ -1,6 +1,10 @@
-import { type Handle } from "@sveltejs/kit";
+import { type Handle, type ServerInit } from "@sveltejs/kit";
 
 import { paraglideMiddleware } from "$lib/paraglide/server";
+
+// @ts-expect-error: ignore ts(2307)
+import { PUBLIC_PORT } from "$env/static/public";
+import MainApi from "$lib/server/api/MainApi";
 
 const handleParaglide: Handle = ({ event, resolve }) =>
   paraglideMiddleware(event.request, ({ request, locale }) => {
@@ -12,4 +16,17 @@ const handleParaglide: Handle = ({ event, resolve }) =>
     });
   });
 
-export const handle: Handle = handleParaglide;
+const initServer: ServerInit = () => {
+  const portString = PUBLIC_PORT as string;
+  const portNumber = Number.parseInt(portString);
+  const mainApi = new MainApi();
+  mainApi.start(portNumber);
+};
+
+export const handle: Handle = ({ event, resolve }) => {
+  return handleParaglide({ event, resolve });
+};
+
+export const init: ServerInit = async () => {
+  return initServer();
+};
