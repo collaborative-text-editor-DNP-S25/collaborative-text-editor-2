@@ -33,6 +33,12 @@ export default class MainApi {
     });
 
     this.documentRepo = new DocumentRepositoryImpl();
-    this.socketRepo = new SocketRepositoryImpl();
+    this.socketRepo = new SocketRepositoryImpl(this.io);
+  }
+
+  start(port: number) {
+    this.server.listen(port, () => {
+      console.log(`Server started on port: ${port.toString()}`);
+    });
   }
 }

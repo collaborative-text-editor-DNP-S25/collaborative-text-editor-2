@@ -1,10 +1,11 @@
 import { type DocumentId } from "$lib/server/domain/entities/Document";
+import type { SocketClient } from "$lib/server/domain/entities/SocketClient";
+
 
 export type Message = string;
-export type Client = WebSocket;
 
 export interface SocketRepository {
-  broadcast(docContent: DocumentId, message: Message): Promise<void>;
-  registerClient(client: Client, docId: DocumentId): Promise<void>;
-  unregisterClient(client: Client, docId: DocumentId): Promise<void>;
+  broadcast(docContent: DocumentId, message: Message): void;
+  registerClient(client: SocketClient, docId: DocumentId): Promise<void>;
+  unregisterClient(client: SocketClient, docId: DocumentId): Promise<void>;
 }
