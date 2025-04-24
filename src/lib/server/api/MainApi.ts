@@ -5,6 +5,7 @@ import { type ServerToClientEvents } from "$lib/server/domain/entities/events/Se
 import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
 import { type DocumentRepository } from "$lib/server/domain/repositories/DocumentRepository";
 import { type SocketRepository } from "$lib/server/domain/repositories/SocketRepository";
+import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
 import express, { type Express } from "express";
 import { createServer, type Server as HttpServer } from "http";
 import { Server } from "socket.io";
@@ -16,6 +17,7 @@ export default class MainApi {
 
   documentRepo: DocumentRepository;
   socketRepo: SocketRepository;
+  useCaseContainer: UseCaseContainer;
 
   constructor() {
     this.app = express();
@@ -34,6 +36,10 @@ export default class MainApi {
 
     this.documentRepo = new DocumentRepositoryImpl();
     this.socketRepo = new SocketRepositoryImpl(this.io);
+    this.useCaseContainer = new UseCaseContainer(
+      this.documentRepo,
+      this.socketRepo,
+    );
   }
 
   start(port: number) {
