@@ -12,7 +12,7 @@ import type DocumentRepository from "$lib/server/domain/repositories/DocumentRep
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
 
-export default class MainApi {
+export default class ServerApi {
   app: Express;
   server: HttpServer;
   io: IoServer<

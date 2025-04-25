@@ -4,7 +4,7 @@ import { paraglideMiddleware } from "$lib/paraglide/server";
 
 // @ts-expect-error: ignore ts(2307)
 import { WS_PORT } from "$env/static/private";
-import MainApi from "$lib/server/api/MainApi";
+import ServerApi from "$lib/server/api/ServerApi";
 
 const handleParaglide: Handle = ({ event, resolve }) =>
   paraglideMiddleware(event.request, ({ request, locale }) => {
@@ -19,7 +19,7 @@ const handleParaglide: Handle = ({ event, resolve }) =>
 const initServer: ServerInit = () => {
   const portString = WS_PORT as string;
   const portNumber = Number.parseInt(portString);
-  const mainApi = new MainApi();
+  const mainApi = new ServerApi();
   mainApi.start(portNumber);
 };
 
