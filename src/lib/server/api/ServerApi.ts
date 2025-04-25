@@ -86,7 +86,7 @@ export default class ServerApi {
   // Inner class to manage Document
   // Passing useCaseContainer here ensures that we use the same class of type DocumentRepositoryImpl
   public DocumentManagement = class {
-    constructor(private parent: MainApi) {}
+    constructor(private parent: ServerApi) {}
 
     public createDoc(): Promise<DocumentId> {
       const id = this.parent.useCaseContainer.createDocument.invoke();
