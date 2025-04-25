@@ -11,6 +11,7 @@ import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData"
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
+import type { DocumentId } from "../domain/entities/Document";
 
 export default class ServerApi {
   app: Express;
@@ -81,5 +82,26 @@ export default class ServerApi {
     this.server.listen(port, () => {
       console.log(`Server started on port: ${port.toString()}`);
     });
+  }
+  // Inner class to manage Document
+  // Passing useCaseContainer here ensures that we use the same class of type DocumentRepositoryImpl
+  public DocumentManagement = class {
+    constructor(private parent: ServerApi) {}
+
+    public createDoc(): Promise<DocumentId> {
+      const id = this.parent.useCaseContainer.createDocument.invoke();
+      return id;
+    }
+
+    public async updateDoc(docId: DocumentId, newContent: DocumentContent): Promise<void> {
+      await this.parent.useCaseContainer.updateDocument.invoke(docId, newContent);
+    }
+
+    public async getDoc(docId: DocumentId): Promise<Document> {}
+
+    public deleteDoc(docId: DocumentId): Promise<DocumentId> {
+      const id = this.parent.useCaseContainer.deleteDocument.invoke(docId);
+      return id;
+    }
   }
 }
