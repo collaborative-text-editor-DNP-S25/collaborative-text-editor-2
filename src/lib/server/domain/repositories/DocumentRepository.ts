@@ -1,5 +1,4 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
-import type Document from "$lib/server/domain/entities/Document";
+import { type DocumentId } from "$lib/common/entities/Document";
 
 export default interface DocumentRepository {
   createDocument(): Promise<DocumentId>;

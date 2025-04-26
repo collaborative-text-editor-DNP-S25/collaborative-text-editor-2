@@ -1,5 +1,5 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
-import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
+import { type DocumentId } from "$lib/common/entities/Document";
+import { type SocketClient } from "$lib/common/entities/SocketClient";
 
 export type Message = string;
 

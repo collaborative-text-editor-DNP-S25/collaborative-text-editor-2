@@ -1,10 +1,10 @@
 import { type Server } from "socket.io";
 
-import { type DocumentId } from "$lib/server/domain/entities/Document";
-import { type ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
-import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
-import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
-import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
+import { type DocumentId } from "$lib/common/entities/Document";
+import { type ClientToServerEvents } from "$lib/common/entities/events/ClientToServerEvents";
+import { type ServerToClientEvents } from "$lib/common/entities/events/ServerToClientEvents";
+import { type SocketClient } from "$lib/common/entities/SocketClient";
+import { type SubscriberData } from "$lib/common/entities/SubscriberData";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import { type Message } from "$lib/server/domain/repositories/SocketRepository";
 

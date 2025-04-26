@@ -1,7 +1,7 @@
 import {
   type DocumentContent,
   type DocumentId,
-} from "$lib/server/domain/entities/Document";
+} from "$lib/common/entities/Document";
 
 export interface ClientToServerEvents {
   enterDocument: (docId: DocumentId) => void;
