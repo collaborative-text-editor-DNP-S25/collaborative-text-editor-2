@@ -102,23 +102,15 @@ export default class ServerApi {
       return id;
     }
 
-<<<<<<< HEAD
     public async updateDoc(docId: DocumentId, newContent: DocumentContent): Promise<void> {
       await this.parent.useCaseContainer.updateDocument.invoke(docId, newContent);
     }
 
     public async getDoc(docId: DocumentId): Promise<Document> {}
 
-=======
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
     public deleteDoc(docId: DocumentId): Promise<DocumentId> {
       const id = this.parent.useCaseContainer.deleteDocument.invoke(docId);
       return id;
     }
-<<<<<<< HEAD
-  }
-}
-=======
   };
 }
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa

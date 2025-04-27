@@ -35,7 +35,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
   }
 
   async updateDocument(docId: DocumentId, document: Document): Promise<void> {
-<<<<<<< HEAD
     const existingDoc = DocumentRepositoryImpl.documents.get(docId);
     if (!existingDoc) {
       throw new Error(`Document with id ${docId} not found`);
@@ -52,9 +51,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       timestamp: new Date(),
       versionHistory,
     });
-=======
-    // TODO: implement update doc functionality
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
   }
 
   async deleteDocument(docId: DocumentId): Promise<DocumentId> {
