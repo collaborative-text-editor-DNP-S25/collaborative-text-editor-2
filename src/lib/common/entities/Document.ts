@@ -11,4 +11,5 @@ export interface Document {
   content: DocumentContent;
   timestamp: Date;
   versionHistory: VersionEntry[];
+  currentVersionIndex: number;
 }

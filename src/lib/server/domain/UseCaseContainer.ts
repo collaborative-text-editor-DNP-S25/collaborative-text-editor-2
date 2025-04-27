@@ -4,14 +4,18 @@ import CreateDocumentUseCase from "./usecases/CreateDocumentUseCase";
 import DeleteDocumentUseCase from "./usecases/DeleteDocumentUseCase";
 import EnterDocumentUseCase from "./usecases/EnterDocumentUseCase";
 import ExitDocumentUseCase from "./usecases/ExitDocumentUseCase";
-import UpdateDocumenUseCase from "./usecases/UpdateDocumentUseCase";
+import UpdateDocumentUseCase from "./usecases/UpdateDocumentUseCase";
+import UndoDocumentUseCase from "./usecases/UndoDocumentUsaCase";
+import RedoDocumentUseCase from "./usecases/RedoDocumentUseCase";
 
 export default class UseCaseContainer {
   createDocument: CreateDocumentUseCase;
   deleteDocument: DeleteDocumentUseCase;
   enterDocument: EnterDocumentUseCase;
   exitDocument: ExitDocumentUseCase;
-  updateDocument: UpdateDocumenUseCase;
+  updateDocument: UpdateDocumentUseCase;
+  undoDocument: UndoDocumentUseCase;
+  redoDocument: RedoDocumentUseCase;
 
   constructor(
     private documentRepo: DocumentRepository,
@@ -21,6 +25,8 @@ export default class UseCaseContainer {
     this.createDocument = new CreateDocumentUseCase(documentRepo);
     this.deleteDocument = new DeleteDocumentUseCase(documentRepo);
     this.exitDocument = new ExitDocumentUseCase(socketRepo);
-    this.updateDocument = new UpdateDocumenUseCase(documentRepo, socketRepo);
+    this.updateDocument = new UpdateDocumentUseCase(documentRepo, socketRepo);
+    this.undoDocument = new UndoDocumentUseCase(documentRepo, socketRepo);
+    this.redoDocument = new RedoDocumentUseCase(documentRepo, socketRepo);
   }
 }

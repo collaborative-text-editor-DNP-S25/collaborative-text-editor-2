@@ -47,6 +47,13 @@ export class ClientApi {
     this.io.emit("deleteDocument", docId);
   }
 
+  public undo(docId: string): void {
+    this.io.emit("undo", docId);
+  }
+  public redo(docId: string): void {
+    this.io.emit("redo", docId);
+  }
+
   public onMessage(callback: (message: string) => void): () => void {
     const callbackId = crypto.randomUUID();
     this.callbacks.set(callbackId, callback);

@@ -87,6 +87,20 @@ export default class ServerApi {
       socket.on("deleteDocument", async (docId) => {
         await this.useCaseContainer.deleteDocument.invoke(docId);
       });
+
+      socket.on("undo", async (docId) => {
+        await this.useCaseContainer.redoDocument.invoke();
+        console.log(
+          `Client [${socket.id}] performed undo on document: ${docId}`,
+        );
+      });
+
+      socket.on("redo", async (docId) => {
+        await this.useCaseContainer.redoDocument.invoke();
+        console.log(
+          `Client [${socket.id}] performed redo on document: ${docId}`,
+        );
+      });
     });
   }
 

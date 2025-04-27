@@ -5,6 +5,6 @@ export default interface DocumentRepository {
   getDocument(docId: DocumentId): Promise<Document | undefined>;
   updateDocument(docId: DocumentId, document: Document): Promise<void>;
   deleteDocument(docId: DocumentId): Promise<DocumentId>;
-
-  // TODO: declare methods for version history
+  undo(docId: DocumentId): Promise<Document | undefined>;
+  redo(docId: DocumentId): Promise<Document | undefined>;
 }

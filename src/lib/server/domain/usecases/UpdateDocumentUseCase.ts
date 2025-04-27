@@ -16,6 +16,10 @@ export default class UpdateDocumenUseCase {
   async invoke(docId: DocumentId, newContent: DocumentContent): Promise<void> {
     const document = await this.documentRepo.getDocument(docId);
 
+    if (!document){
+      throw new Error(`Document with ID ${docId} not found`);
+    }
+
     let updatedVersionHistory: VersionEntry[];
     if (document === undefined) {
       updatedVersionHistory = [];
@@ -28,6 +32,7 @@ export default class UpdateDocumenUseCase {
       content: newContent,
       timestamp: new Date(),
       versionHistory: updatedVersionHistory,
+      currentVersionIndex: document.currentVersionIndex + 1,
     };
 
     await this.documentRepo.updateDocument(docId, updatedDocument);

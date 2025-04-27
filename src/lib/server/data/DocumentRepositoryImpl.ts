@@ -15,6 +15,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       content: "",
       timestamp: new Date(),
       versionHistory: [],
+      currendtVersionIndex: -1,
     };
     DocumentRepositoryImpl.documents.set(docId, newDoc);
     return docId;
@@ -37,21 +38,69 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       throw new Error(`Document with id ${docId} not found`);
     }
 
-    const versionHistory = existingDoc.versionHistory;
-    versionHistory.push({
-      content: existingDoc.content,
-      timestamp: existingDoc.timestamp,
-    });
+    // const versionHistory = existingDoc.versionHistory;
+    // versionHistory.push({
+    //   content: existingDoc.content,
+    //   timestamp: existingDoc.timestamp,
+    // });
+
+    if (document.content !== existingDoc.content) {
+      existingDoc.versionHistory = existingDoc.versionHistory.slice(0, existingDoc.currentVersionIndex + 1);
+      existingDoc.versionHistory.push({
+        content: existingDoc.content,
+        timestamp: existingDoc.timestamp,
+      });
+      document.currentVersionIndex = existingDoc.versionHistory.length - 1;
+    }
+
 
     DocumentRepositoryImpl.documents.set(docId, {
       ...document,
       timestamp: new Date(),
-      versionHistory,
+      versionHistory: existingDoc.versionHistory,
     });
   }
 
   async deleteDocument(docId: DocumentId): Promise<DocumentId> {
     const exists = DocumentRepositoryImpl.documents.delete(docId);
     return exists ? docId : DocumentRepositoryImpl.ERROR_DOC_ID;
+  }
+
+  async undo(docId: DocumentId): Promise<Document | undefined> {
+    const document = DocumentRepositoryImpl.documents.get(docId);
+    if (!document || document.currentVersionIndex <= -1) {
+      return undefined;
+    }
+
+    const newIndex = document.currentVersionIndex - 1;
+    const newContent = newIndex >= 0 ? document.versionHistory[newIndex].content : "";
+    const updatedDocument: Document = {
+      ...document,
+      content: newContent,
+      timestamp: new Date(),
+      versionHistory: document.versionHistory,
+      currentVersionIndex: newIndex,
+    };
+    DocumentRepositoryImpl.documents.set(docId, updatedDocument);
+    return updatedDocument;
+  }
+
+  async redo(docId: DocumentId): Promise<Document | undefined> {
+    const document = DocumentRepositoryImpl.documents.get(docId);
+    if (!document || document.currentVersionIndex >= document.versionHistory.length - 1) {
+      return undefined;
+    }
+
+    const newIndex = document.currentVersionIndex + 1;
+    const newContent = document.versionHistory[newIndex].content;
+    const updatedDocument: Document = {
+      ...document,
+      content: newContent,
+      timestamp: new Date(),
+      versionHistory: document.versionHistory,
+      currentVersionIndex: newIndex,
+    };
+    DocumentRepositoryImpl.documents.set(docId, updatedDocument);
+    return updatedDocument;
   }
 }

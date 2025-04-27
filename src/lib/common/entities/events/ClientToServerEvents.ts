@@ -9,4 +9,6 @@ export interface ClientToServerEvents {
   updateDocument: (docId: DocumentId, newContent: DocumentContent) => void;
   createDocument: () => void;
   deleteDocument: (docId: DocumentId) => void;
+  undo: (docId: DocumentId) => void;
+  redo: (docId: DocumentId) => void;
 }
