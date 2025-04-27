@@ -11,11 +11,7 @@ import { type SubscriberData } from "$lib/common/entities/SubscriberData";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
-<<<<<<< HEAD
-import type { DocumentId } from "../domain/entities/Document";
-=======
 import type { DocumentId } from "$lib/common/entities/Document";
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
 
 export default class ServerApi {
   app: Express;
