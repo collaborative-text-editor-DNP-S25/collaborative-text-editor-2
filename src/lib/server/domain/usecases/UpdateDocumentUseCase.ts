@@ -16,7 +16,7 @@ export default class UpdateDocumenUseCase {
   async invoke(docId: DocumentId, newContent: DocumentContent): Promise<void> {
     const document = await this.documentRepo.getDocument(docId);
 
-    if (!document){
+    if (!document) {
       throw new Error(`Document with ID ${docId} not found`);
     }
 

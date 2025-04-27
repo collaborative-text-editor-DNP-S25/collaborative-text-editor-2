@@ -1,4 +1,6 @@
-export type DocumentId = string;
+export interface DocumentId {
+  id: String;
+}
 export type DocumentContent = string;
 
 export interface VersionEntry {

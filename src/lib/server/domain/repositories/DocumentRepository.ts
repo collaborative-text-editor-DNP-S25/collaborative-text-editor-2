@@ -7,4 +7,5 @@ export default interface DocumentRepository {
   deleteDocument(docId: DocumentId): Promise<DocumentId>;
   undo(docId: DocumentId): Promise<Document | undefined>;
   redo(docId: DocumentId): Promise<Document | undefined>;
+  getAllDocuments(): Promise<DocumentId[]>;
 }

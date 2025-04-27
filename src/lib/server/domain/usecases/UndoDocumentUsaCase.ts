@@ -10,8 +10,8 @@ export default class UndoDocumentUseCase {
 
   async invoke(docId: DocumentId): Promise<void> {
     const document = await this.documentRepo.undo(docId);
-    if (document){
-        this.socketRepo.broadcast(docId, document.content);
+    if (document) {
+      this.socketRepo.broadcast(docId, document.content);
     }
   }
 }

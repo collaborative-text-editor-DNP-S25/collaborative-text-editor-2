@@ -89,14 +89,14 @@ export default class ServerApi {
       });
 
       socket.on("undo", async (docId) => {
-        await this.useCaseContainer.redoDocument.invoke();
+        await this.useCaseContainer.redoDocument.invoke(docId);
         console.log(
           `Client [${socket.id}] performed undo on document: ${docId}`,
         );
       });
 
       socket.on("redo", async (docId) => {
-        await this.useCaseContainer.redoDocument.invoke();
+        await this.useCaseContainer.redoDocument.invoke(docId);
         console.log(
           `Client [${socket.id}] performed redo on document: ${docId}`,
         );
