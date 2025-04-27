@@ -14,10 +14,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       id: docId,
       content: "",
       timestamp: new Date(),
-<<<<<<< HEAD
       versionHistory: [],
-=======
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
     };
     DocumentRepositoryImpl.documents.set(docId, newDoc);
     return docId;
