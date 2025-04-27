@@ -6,7 +6,7 @@ export interface VersionEntry {
   timestamp: Date;
 }
 
-export default interface Document {
+export interface Document {
   id: DocumentId;
   content: DocumentContent;
   timestamp: Date;

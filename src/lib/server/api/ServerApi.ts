@@ -11,7 +11,6 @@ import { type SubscriberData } from "$lib/common/entities/SubscriberData";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
-import type { DocumentId } from "$lib/common/entities/Document";
 
 export default class ServerApi {
   app: Express;
@@ -74,11 +73,19 @@ export default class ServerApi {
         }
       });
 
-      socket.on("updateDocument", (docId, newContent) => {
-        this.useCaseContainer.updateDocument.invoke(docId, newContent);
+      socket.on("updateDocument", async (docId, newContent) => {
+        await this.useCaseContainer.updateDocument.invoke(docId, newContent);
         console.log(
           `Client [${socket.id}] updated document: ${docId} with new content: ${newContent}`,
         );
+      });
+
+      socket.on("createDocument", async () => {
+        await this.useCaseContainer.createDocument.invoke();
+      });
+
+      socket.on("deleteDocument", async (docId) => {
+        await this.useCaseContainer.deleteDocument.invoke(docId);
       });
     });
   }
@@ -88,25 +95,4 @@ export default class ServerApi {
       console.log(`Server started on port: ${port.toString()}`);
     });
   }
-  // Inner class to manage Document
-  // Passing useCaseContainer here ensures that we use the same class of type DocumentRepositoryImpl
-  public DocumentManagement = class {
-    constructor(private parent: ServerApi) {}
-
-    public createDoc(): Promise<DocumentId> {
-      const id = this.parent.useCaseContainer.createDocument.invoke();
-      return id;
-    }
-
-    public async updateDoc(docId: DocumentId, newContent: DocumentContent): Promise<void> {
-      await this.parent.useCaseContainer.updateDocument.invoke(docId, newContent);
-    }
-
-    public async getDoc(docId: DocumentId): Promise<Document> {}
-
-    public deleteDoc(docId: DocumentId): Promise<DocumentId> {
-      const id = this.parent.useCaseContainer.deleteDocument.invoke(docId);
-      return id;
-    }
-  };
 }

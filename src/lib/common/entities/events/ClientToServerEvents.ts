@@ -7,4 +7,6 @@ export interface ClientToServerEvents {
   enterDocument: (docId: DocumentId) => void;
   exitDocument: (docId: DocumentId) => void;
   updateDocument: (docId: DocumentId, newContent: DocumentContent) => void;
+  createDocument: () => void;
+  deleteDocument: (docId: DocumentId) => void;
 }

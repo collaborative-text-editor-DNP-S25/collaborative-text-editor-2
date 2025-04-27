@@ -39,6 +39,14 @@ export class ClientApi {
     this.io.emit("updateDocument", docId, newContent);
   }
 
+  public createDocument(): void {
+    this.io.emit("createDocument");
+  }
+
+  public deleteDocument(docId: string): void {
+    this.io.emit("deleteDocument", docId);
+  }
+
   public onMessage(callback: (message: string) => void): () => void {
     const callbackId = crypto.randomUUID();
     this.callbacks.set(callbackId, callback);
