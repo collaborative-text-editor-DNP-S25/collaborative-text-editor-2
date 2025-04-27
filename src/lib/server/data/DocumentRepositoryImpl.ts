@@ -1,6 +1,6 @@
 import { type DocumentId } from "$lib/common/entities/Document";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
-import type Document from "$lib/server/domain/entities/Document";
+import type { Document } from "$lib/common/entities/Document";
 
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private static id = 0;
@@ -15,7 +15,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       content: "",
       timestamp: new Date(),
       versionHistory: [],
-      currendtVersionIndex: -1,
+      currentVersionIndex: -1,
     };
     DocumentRepositoryImpl.documents.set(docId, newDoc);
     return docId;
