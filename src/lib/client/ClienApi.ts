@@ -20,7 +20,6 @@ export class ClientApi {
       this.callbacks.forEach((callback) => {
         callback(message);
       });
-      console.log(message);
     });
 
     this.io.on("connect_error", (err) => {
@@ -38,5 +37,14 @@ export class ClientApi {
 
   public updateDocument(docId: string, newContent: string): void {
     this.io.emit("updateDocument", docId, newContent);
+  }
+
+  public onMessage(callback: (message: string) => void): () => void {
+    const callbackId = crypto.randomUUID();
+    this.callbacks.set(callbackId, callback);
+
+    return () => {
+      this.callbacks.delete(callbackId);
+    };
   }
 }
