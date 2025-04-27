@@ -1,8 +1,12 @@
 import {
   type DocumentContent,
   type DocumentId,
+<<<<<<< HEAD
   type Document,
 } from "$lib/server/domain/entities/Document";
+=======
+} from "$lib/common/entities/Document";
+>>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 

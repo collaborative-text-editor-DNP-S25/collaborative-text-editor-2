@@ -11,11 +11,7 @@ import { type SubscriberData } from "$lib/common/entities/SubscriberData";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
-<<<<<<< HEAD
-import type { DocumentId } from "../domain/entities/Document";
-=======
 import type { DocumentId } from "$lib/common/entities/Document";
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
 
 export default class ServerApi {
   app: Express;
@@ -102,23 +98,9 @@ export default class ServerApi {
       return id;
     }
 
-<<<<<<< HEAD
-    public async updateDoc(docId: DocumentId, newContent: DocumentContent): Promise<void> {
-      await this.parent.useCaseContainer.updateDocument.invoke(docId, newContent);
-    }
-
-    public async getDoc(docId: DocumentId): Promise<Document> {}
-
-=======
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
     public deleteDoc(docId: DocumentId): Promise<DocumentId> {
       const id = this.parent.useCaseContainer.deleteDocument.invoke(docId);
       return id;
     }
-<<<<<<< HEAD
-  }
-}
-=======
   };
 }
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa

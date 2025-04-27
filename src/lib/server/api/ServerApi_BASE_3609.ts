@@ -4,18 +4,13 @@ import { Server as IoServer } from "socket.io";
 
 import DocumentRepositoryImpl from "$lib/server/data/DocumentRepositoryImpl";
 import SocketRepositoryImpl from "$lib/server/data/SocketRepositoryImpl";
-import { type ClientToServerEvents } from "$lib/common/entities/events/ClientToServerEvents";
-import { type ServerToClientEvents } from "$lib/common/entities/events/ServerToClientEvents";
-import { type SocketClient } from "$lib/common/entities/SocketClient";
-import { type SubscriberData } from "$lib/common/entities/SubscriberData";
+import { type ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
+import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
+import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
+import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
-<<<<<<< HEAD
-import type { DocumentId } from "../domain/entities/Document";
-=======
-import type { DocumentId } from "$lib/common/entities/Document";
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
 
 export default class ServerApi {
   app: Express;
@@ -61,12 +56,10 @@ export default class ServerApi {
 
       socket.on("enterDocument", async (docId) => {
         await this.useCaseContainer.enterDocument.invoke(socket, docId);
-        console.log(`Client [${socket.id}] entered document: ${docId}`);
       });
 
       socket.on("exitDocument", async (docId) => {
         await this.useCaseContainer.exitDocument.invoke(socket, docId);
-        console.log(`Client [${socket.id}] exited document: ${docId}`);
       });
 
       socket.on("disconnect", async () => {
@@ -80,9 +73,6 @@ export default class ServerApi {
 
       socket.on("updateDocument", (docId, newContent) => {
         this.useCaseContainer.updateDocument.invoke(docId, newContent);
-        console.log(
-          `Client [${socket.id}] updated document: ${docId} with new content: ${newContent}`,
-        );
       });
     });
   }
@@ -92,33 +82,4 @@ export default class ServerApi {
       console.log(`Server started on port: ${port.toString()}`);
     });
   }
-  // Inner class to manage Document
-  // Passing useCaseContainer here ensures that we use the same class of type DocumentRepositoryImpl
-  public DocumentManagement = class {
-    constructor(private parent: ServerApi) {}
-
-    public createDoc(): Promise<DocumentId> {
-      const id = this.parent.useCaseContainer.createDocument.invoke();
-      return id;
-    }
-
-<<<<<<< HEAD
-    public async updateDoc(docId: DocumentId, newContent: DocumentContent): Promise<void> {
-      await this.parent.useCaseContainer.updateDocument.invoke(docId, newContent);
-    }
-
-    public async getDoc(docId: DocumentId): Promise<Document> {}
-
-=======
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
-    public deleteDoc(docId: DocumentId): Promise<DocumentId> {
-      const id = this.parent.useCaseContainer.deleteDocument.invoke(docId);
-      return id;
-    }
-<<<<<<< HEAD
-  }
 }
-=======
-  };
-}
->>>>>>> 45aaa7f7207dd2a0b5963b0d5e25f842f341eeaa
