@@ -7,8 +7,8 @@ import ExitDocumentUseCase from "./usecases/ExitDocumentUseCase";
 import UpdateDocumentUseCase from "./usecases/UpdateDocumentUseCase";
 import UndoDocumentUseCase from "./usecases/UndoDocumentUsaCase";
 import RedoDocumentUseCase from "./usecases/RedoDocumentUseCase";
-import GetDocumentUseCase from "./usecases/GetDocument";
-import GetAllDocumentsUseCase from "./usecases/GetAllDocuments";
+import GetDocumentUseCase from "./usecases/GetDocumentUseCase";
+import GetAllDocumentsUseCase from "./usecases/GetAllDocumentsUseCase";
 
 export default class UseCaseContainer {
   createDocument: CreateDocumentUseCase;
@@ -33,6 +33,6 @@ export default class UseCaseContainer {
     this.undoDocument = new UndoDocumentUseCase(documentRepo, socketRepo);
     this.redoDocument = new RedoDocumentUseCase(documentRepo, socketRepo);
     this.getDocument = new GetDocumentUseCase(documentRepo);
-    this.getAllDocuments = new GetAllDocumentsUseCase(documentRepo);
+    this.getAllDocuments = new GetAllDocumentsUseCase(documentRepo, socketRepo);
   }
 }

@@ -1,5 +1,5 @@
 export interface DocumentId {
-  id: String;
+  id: string;
 }
 export type DocumentContent = string;
 

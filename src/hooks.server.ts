@@ -8,7 +8,7 @@ import ServerApi from "$lib/server/api/ServerApi";
 
 // // @ts-expect-error: ignore ts(2307)
 // import { SERVER_URL } from "$env/static/private";
-// import { ClientApi } from "$lib/client/ClienApi";
+// import { ClientApi } from "$lib/server/api/ClientApi";
 
 const handleParaglide: Handle = ({ event, resolve }) =>
   paraglideMiddleware(event.request, ({ request, locale }) => {
@@ -31,13 +31,18 @@ const initServer: ServerInit = () => {
 //   const serverUrl = SERVER_URL as string;
 //   const clientApi = new ClientApi(serverUrl);
 
-//   clientApi.createDocument();
-//   clientApi.enterDocument("doc-0");
-//   clientApi.updateDocument("doc-0", "doc update");
-
 //   clientApi.onMessage((message) => {
 //     console.log(message);
 //   });
+//   clientApi.onGetAllDocuments((documentIds) => {
+//     console.log(documentIds);
+//   });
+
+//   clientApi.createDocument();
+//   clientApi.enterDocument({ id: "doc-0" });
+//   clientApi.updateDocument({ id: "doc-0" }, "doc update");
+//   clientApi.getAllDocuments();
+
 //   return clientApi;
 // };
 

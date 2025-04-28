@@ -4,10 +4,10 @@ import { Server as IoServer } from "socket.io";
 
 import DocumentRepositoryImpl from "$lib/server/data/DocumentRepositoryImpl";
 import SocketRepositoryImpl from "$lib/server/data/SocketRepositoryImpl";
-import { type ClientToServerEvents } from "$lib/common/entities/events/ClientToServerEvents";
-import { type ServerToClientEvents } from "$lib/common/entities/events/ServerToClientEvents";
-import { type SocketClient } from "$lib/common/entities/SocketClient";
-import { type SubscriberData } from "$lib/common/entities/SubscriberData";
+import { type ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
+import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
+import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
+import { type SubscriberData } from "$lib/server/domain/entities/SubscriberData";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 import UseCaseContainer from "$lib/server/domain/UseCaseContainer";
@@ -56,16 +56,16 @@ export default class ServerApi {
 
       socket.on("enterDocument", async (docId) => {
         await this.useCaseContainer.enterDocument.invoke(socket, docId);
-        console.log(`Client [${socket.id}] entered document: ${docId}`);
+        console.log(`Client [${socket.id}] enters room ${docId.id}`);
       });
 
       socket.on("exitDocument", async (docId) => {
         await this.useCaseContainer.exitDocument.invoke(socket, docId);
-        console.log(`Client [${socket.id}] exited document: ${docId}`);
+        console.log(`Client [${socket.id}] exits room ${docId.id}`);
       });
 
       socket.on("disconnect", async () => {
-        if (socket.data.docId) {
+        if (socket.data.docId !== undefined) {
           await this.useCaseContainer.exitDocument.invoke(
             socket,
             socket.data.docId,
@@ -76,7 +76,7 @@ export default class ServerApi {
       socket.on("updateDocument", async (docId, newContent) => {
         await this.useCaseContainer.updateDocument.invoke(docId, newContent);
         console.log(
-          `Client [${socket.id}] updated document: ${docId} with new content: ${newContent}`,
+          `Client [${socket.id}] updated document: ${docId.id} with new content: ${newContent}`,
         );
       });
 
@@ -91,15 +91,19 @@ export default class ServerApi {
       socket.on("undo", async (docId) => {
         await this.useCaseContainer.redoDocument.invoke(docId);
         console.log(
-          `Client [${socket.id}] performed undo on document: ${docId}`,
+          `Client [${socket.id}] performed undo on document: ${docId.id}`,
         );
       });
 
       socket.on("redo", async (docId) => {
         await this.useCaseContainer.redoDocument.invoke(docId);
         console.log(
-          `Client [${socket.id}] performed redo on document: ${docId}`,
+          `Client [${socket.id}] performed redo on document: ${docId.id}`,
         );
+      });
+
+      socket.on("getAllDocuments", async () => {
+        await this.useCaseContainer.getAllDocuments.invoke(socket);
       });
     });
   }

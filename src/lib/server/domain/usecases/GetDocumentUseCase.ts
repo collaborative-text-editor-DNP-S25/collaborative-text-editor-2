@@ -1,6 +1,6 @@
-import type { DocumentId } from "$lib/common/entities/Document";
+import type { DocumentId } from "$lib/server/domain/entities/Document";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
-import { type Document } from "$lib/common/entities/Document";
+import { type Document } from "$lib/server/domain/entities/Document";
 
 export default class GetDocumentUseCase {
   constructor(private documentRepo: DocumentRepository) {}
