@@ -32,7 +32,7 @@ export default class UseCaseContainer {
     this.updateDocument = new UpdateDocumentUseCase(documentRepo, socketRepo);
     this.undoDocument = new UndoDocumentUseCase(documentRepo, socketRepo);
     this.redoDocument = new RedoDocumentUseCase(documentRepo, socketRepo);
-    this.getDocument = new GetDocumentUseCase(documentRepo);
+    this.getDocument = new GetDocumentUseCase(documentRepo, socketRepo);
     this.getAllDocuments = new GetAllDocumentsUseCase(documentRepo, socketRepo);
   }
 }
