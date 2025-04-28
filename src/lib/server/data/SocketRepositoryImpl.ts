@@ -1,6 +1,9 @@
 import { type Server } from "socket.io";
 
-import { type DocumentId } from "$lib/server/domain/entities/Document";
+import {
+  type DocumentContent,
+  type DocumentId,
+} from "$lib/server/domain/entities/Document";
 import { type ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
 import { type ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
 import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
@@ -24,6 +27,10 @@ export default class SocketRepositoryImpl implements SocketRepository {
 
   sendAllDocuments(client: SocketClient, documentIds: DocumentId[]): void {
     this.io.to(client.id).emit("sendDocumentIds", documentIds);
+  }
+
+  sendDocument(client: SocketClient, documentContent: DocumentContent): void {
+    this.io.to(client.id).emit("sendDocument", documentContent);
   }
 
   async registerClient(client: SocketClient, docId: DocumentId): Promise<void> {

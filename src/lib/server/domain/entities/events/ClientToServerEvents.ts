@@ -12,4 +12,5 @@ export interface ClientToServerEvents {
   undo: (docId: DocumentId) => void;
   redo: (docId: DocumentId) => void;
   getAllDocuments: () => void;
+  getDocument: (docId: DocumentId) => void;
 }

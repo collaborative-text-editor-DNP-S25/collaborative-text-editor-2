@@ -1,6 +1,9 @@
 import { io, type Socket } from "socket.io-client";
 
-import type { DocumentId } from "$lib/server/domain/entities/Document";
+import type {
+  DocumentContent,
+  DocumentId,
+} from "$lib/server/domain/entities/Document";
 import type { ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
 import type { ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
 import type { Message } from "$lib/server/domain/repositories/SocketRepository";
@@ -14,6 +17,8 @@ class ClientApi {
 
   private onMessageCallbacks = new Map<string, OnMessageCallback>();
   private getAllDocumentsCallbacks = new Map<string, GetAllDocumentsCallback>();
+
+  private documentContentFromGetDocumentContent: DocumentContent = "";
 
   constructor(serverUrl: string) {
     this.io = io(serverUrl, {
@@ -35,6 +40,10 @@ class ClientApi {
       this.getAllDocumentsCallbacks.forEach((callback) => {
         callback(documentIds);
       });
+    });
+
+    this.io.on("sendDocument", (documentContent) => {
+      this.documentContentFromGetDocumentContent = documentContent;
     });
 
     this.io.on("connect_error", (err) => {
@@ -72,6 +81,11 @@ class ClientApi {
 
   public getAllDocuments(): void {
     this.io.emit("getAllDocuments");
+  }
+
+  public getDocument(docId: DocumentId): DocumentContent {
+    this.io.emit("getDocument", docId);
+    return this.documentContentFromGetDocumentContent;
   }
 
   public onGetAllDocuments(callback: GetAllDocumentsCallback): () => void {
