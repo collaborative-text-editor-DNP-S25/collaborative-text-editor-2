@@ -6,10 +6,10 @@ export default class RedoDocumenUseCase {
   constructor(
     private documentRepo: DocumentRepository,
     private socketRepo: SocketRepository,
-  ) {}
+  ) { }
 
-  async invoke(docId: DocumentId): Promise<void> {
-    const document = await this.documentRepo.redo(docId);
+  invoke(docId: DocumentId): void {
+    const document = this.documentRepo.redo(docId);
     if (document) {
       this.socketRepo.broadcast(docId, document.content);
     }

@@ -73,41 +73,47 @@ export default class ServerApi {
         }
       });
 
-      socket.on("updateDocument", async (docId, newContent) => {
-        await this.useCaseContainer.updateDocument.invoke(docId, newContent);
+      socket.on("updateDocument", (docId, newContent) => {
+        this.useCaseContainer.updateDocument.invoke(docId, newContent);
         console.log(
           `Client [${socket.id}] updated document: ${docId.id} with new content: ${newContent}`,
         );
       });
 
-      socket.on("createDocument", async () => {
-        await this.useCaseContainer.createDocument.invoke();
+      socket.on("createDocument", () => {
+        this.useCaseContainer.createDocument.invoke();
       });
 
-      socket.on("deleteDocument", async (docId) => {
-        await this.useCaseContainer.deleteDocument.invoke(docId);
+      socket.on("deleteDocument", (docId) => {
+        this.useCaseContainer.deleteDocument.invoke(docId);
       });
 
-      socket.on("undo", async (docId) => {
-        await this.useCaseContainer.redoDocument.invoke(docId);
+      socket.on("undo", (docId) => {
+        this.useCaseContainer.undoDocument.invoke(docId);
         console.log(
           `Client [${socket.id}] performed undo on document: ${docId.id}`,
         );
       });
 
-      socket.on("redo", async (docId) => {
-        await this.useCaseContainer.redoDocument.invoke(docId);
+      socket.on("redo", (docId) => {
+        this.useCaseContainer.redoDocument.invoke(docId);
         console.log(
           `Client [${socket.id}] performed redo on document: ${docId.id}`,
         );
       });
 
-      socket.on("getAllDocuments", async () => {
-        await this.useCaseContainer.getAllDocuments.invoke(socket);
+      socket.on("getAllDocuments", () => {
+        this.useCaseContainer.getAllDocuments.invoke(socket);
+        console.log(
+          `Client [${socket.id}] gets all documents`,
+        );
       });
 
-      socket.on("getDocument", async (docId) => {
-        await this.useCaseContainer.getDocument.invoke(socket, docId);
+      socket.on("getDocument", (docId) => {
+        this.useCaseContainer.getDocument.invoke(socket, docId);
+        console.log(
+          `Client [${socket.id}] gets document: ${docId.id}`,
+        );
       });
     });
   }

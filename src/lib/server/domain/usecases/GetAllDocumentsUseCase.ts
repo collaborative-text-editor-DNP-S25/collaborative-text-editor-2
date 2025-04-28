@@ -8,8 +8,8 @@ export default class GetAllDocumentsUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  async invoke(client: SocketClient): Promise<void> {
-    const ids = await this.documentRepo.getAllDocuments();
+  invoke(client: SocketClient): void {
+    const ids = this.documentRepo.getAllDocuments();
     this.socketRepo.sendAllDocuments(client, ids);
   }
 }

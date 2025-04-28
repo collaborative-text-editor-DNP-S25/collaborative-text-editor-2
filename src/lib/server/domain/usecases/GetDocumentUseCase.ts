@@ -8,13 +8,13 @@ export default class GetDocumentUseCase {
   constructor(
     private documentRepo: DocumentRepository,
     private socketRepo: SocketRepository,
-  ) {}
+  ) { }
 
-  async invoke(
+  invoke(
     client: SocketClient,
     docId: DocumentId,
-  ): Promise<Document | undefined> {
-    const doc = await this.documentRepo.getDocument(docId);
+  ): Document | undefined {
+    const doc = this.documentRepo.getDocument(docId);
     if (doc == null) {
       return;
     } else {

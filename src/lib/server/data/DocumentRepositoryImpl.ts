@@ -8,7 +8,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
   private documents = new Map<string, Document>();
   private readonly ERROR_DOC_ID: DocumentId = { id: "doc-errorId" }; // Uniform type of non-existent document
 
-  async createDocument(): Promise<DocumentId> {
+  createDocument(): DocumentId {
     const docId: DocumentId = {
       id: `doc-${(this.id++).toString()}`,
     };
@@ -24,7 +24,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return docId;
   }
 
-  async getDocument(docId: DocumentId): Promise<Document | undefined> {
+  getDocument(docId: DocumentId): Document | undefined {
     const document = this.documents.get(docId.id);
     if (document === undefined) {
       return undefined;
@@ -35,7 +35,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     };
   }
 
-  async updateDocument(docId: DocumentId, document: Document): Promise<void> {
+  updateDocument(docId: DocumentId, document: Document): void {
     const existingDoc = this.documents.get(docId.id);
     if (!existingDoc) {
       throw new Error(`Document with id ${docId.id} not found`);
@@ -66,12 +66,12 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     });
   }
 
-  async deleteDocument(docId: DocumentId): Promise<DocumentId> {
+  deleteDocument(docId: DocumentId): DocumentId {
     const exists = this.documents.delete(docId.id);
     return exists ? docId : this.ERROR_DOC_ID;
   }
 
-  async undo(docId: DocumentId): Promise<Document | undefined> {
+  undo(docId: DocumentId): Document | undefined {
     const document = this.documents.get(docId.id);
     if (!document || document.currentVersionIndex <= -1) {
       return undefined;
@@ -91,7 +91,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return updatedDocument;
   }
 
-  async redo(docId: DocumentId): Promise<Document | undefined> {
+  redo(docId: DocumentId): Document | undefined {
     const document = this.documents.get(docId.id);
     if (
       !document ||
@@ -113,7 +113,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return updatedDocument;
   }
 
-  async getAllDocuments(): Promise<DocumentId[]> {
+  getAllDocuments(): DocumentId[] {
     const documentIds: DocumentId[] = [];
     this.documents.forEach((value: Document, key: string) => {
       documentIds.push({ id: key });

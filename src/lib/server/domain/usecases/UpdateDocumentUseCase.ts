@@ -12,8 +12,8 @@ export default class UpdateDocumenUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  async invoke(docId: DocumentId, newContent: DocumentContent): Promise<void> {
-    const document = await this.documentRepo.getDocument(docId);
+  invoke(docId: DocumentId, newContent: DocumentContent): void {
+    const document = this.documentRepo.getDocument(docId);
 
     if (document === undefined) {
       throw new Error(`Document with ID ${docId.id} not found`);
@@ -29,7 +29,7 @@ export default class UpdateDocumenUseCase {
       currentVersionIndex: document.currentVersionIndex + 1,
     };
 
-    await this.documentRepo.updateDocument(docId, updatedDocument);
+    this.documentRepo.updateDocument(docId, updatedDocument);
 
     this.socketRepo.broadcast(docId, newContent);
   }
