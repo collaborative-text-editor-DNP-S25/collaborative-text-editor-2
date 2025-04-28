@@ -8,17 +8,14 @@ export default class GetDocumentUseCase {
   constructor(
     private documentRepo: DocumentRepository,
     private socketRepo: SocketRepository,
-  ) { }
+  ) {}
 
-  invoke(
-    client: SocketClient,
-    docId: DocumentId,
-  ): Document | undefined {
+  invoke(client: SocketClient, docId: DocumentId): Document | undefined {
     const doc = this.documentRepo.getDocument(docId);
     if (doc == null) {
       return;
     } else {
-      this.socketRepo.sendDocument(client, doc.content);
+      this.socketRepo.sendDocument(client, { ok: true, data: doc.content });
     }
   }
 }

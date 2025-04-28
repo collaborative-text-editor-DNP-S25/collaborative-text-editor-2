@@ -16,7 +16,8 @@ export default class UpdateDocumenUseCase {
     const document = this.documentRepo.getDocument(docId);
 
     if (document === undefined) {
-      throw new Error(`Document with ID ${docId.id} not found`);
+      this.socketRepo.broadcast(docId, { ok: false });
+      return;
     }
 
     const updatedVersionHistory = document.versionHistory;
@@ -31,6 +32,6 @@ export default class UpdateDocumenUseCase {
 
     this.documentRepo.updateDocument(docId, updatedDocument);
 
-    this.socketRepo.broadcast(docId, newContent);
+    this.socketRepo.broadcast(docId, { ok: true, data: newContent });
   }
 }

@@ -104,16 +104,12 @@ export default class ServerApi {
 
       socket.on("getAllDocuments", () => {
         this.useCaseContainer.getAllDocuments.invoke(socket);
-        console.log(
-          `Client [${socket.id}] gets all documents`,
-        );
+        console.log(`Client [${socket.id}] gets all documents`);
       });
 
       socket.on("getDocument", (docId) => {
         this.useCaseContainer.getDocument.invoke(socket, docId);
-        console.log(
-          `Client [${socket.id}] gets document: ${docId.id}`,
-        );
+        console.log(`Client [${socket.id}] gets document: ${docId.id}`);
       });
     });
   }

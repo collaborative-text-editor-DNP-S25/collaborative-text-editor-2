@@ -6,7 +6,7 @@ export default class RedoDocumenUseCase {
   constructor(
     private documentRepo: DocumentRepository,
     private socketRepo: SocketRepository,
-  ) { }
+  ) {}
 
   invoke(docId: DocumentId): void {
     const document = this.documentRepo.redo(docId);

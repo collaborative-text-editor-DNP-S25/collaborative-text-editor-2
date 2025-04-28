@@ -1,16 +1,14 @@
 import { io, type Socket } from "socket.io-client";
 
-import type {
-  DocumentId,
-} from "$lib/server/domain/entities/Document";
+import type { DocumentId } from "$lib/server/domain/entities/Document";
 import type { ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
 import type { ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
 import type { Message } from "$lib/server/domain/repositories/SocketRepository";
+import type { ResponseMessage } from "$lib/server/domain/entities/ResponseMessage";
 
-type OnMessageCallback = (message: string) => void;
+type OnMessageCallback = (message: ResponseMessage) => void;
 
 type GetAllDocumentsCallback = (documentIds: DocumentId[]) => void;
-
 
 class ClientApi {
   private io: Socket<ServerToClientEvents, ClientToServerEvents>;
