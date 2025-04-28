@@ -12,13 +12,15 @@ type OnMessageCallback = (message: string) => void;
 
 type GetAllDocumentsCallback = (documentIds: DocumentId[]) => void;
 
+type GetDocumentCallback = (documentContent: DocumentContent) => void;
+
 class ClientApi {
   private io: Socket<ServerToClientEvents, ClientToServerEvents>;
 
   private onMessageCallbacks = new Map<string, OnMessageCallback>();
   private getAllDocumentsCallbacks = new Map<string, GetAllDocumentsCallback>();
+  private getDocumentCallbacks = new Map<string, GetDocumentCallback>();
 
-  private documentContentFromGetDocumentContent: DocumentContent = "";
 
   constructor(serverUrl: string) {
     this.io = io(serverUrl, {
@@ -43,7 +45,9 @@ class ClientApi {
     });
 
     this.io.on("sendDocument", (documentContent) => {
-      this.documentContentFromGetDocumentContent = documentContent;
+      this.getDocumentCallbacks.forEach((callback) => {
+        callback(documentContent);
+      });
     });
 
     this.io.on("connect_error", (err) => {
@@ -83,9 +87,8 @@ class ClientApi {
     this.io.emit("getAllDocuments");
   }
 
-  public getDocument(docId: DocumentId): DocumentContent {
+  public getDocument(docId: DocumentId): void {
     this.io.emit("getDocument", docId);
-    return this.documentContentFromGetDocumentContent;
   }
 
   public onGetAllDocuments(callback: GetAllDocumentsCallback): () => void {
@@ -103,6 +106,15 @@ class ClientApi {
 
     return () => {
       this.onMessageCallbacks.delete(callbackId);
+    };
+  }
+
+  public onGetDocument(callback: GetDocumentCallback): () => void {
+    const callbackId = crypto.randomUUID();
+    this.getDocumentCallbacks.set(callbackId, callback);
+
+    return () => {
+      this.getDocumentCallbacks.delete(callbackId);
     };
   }
 }
