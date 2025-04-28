@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import type { PageProps } from "./$types";
 
@@ -9,7 +10,12 @@
 
   let value = $state<string>();
   api.onMessage((msg) => {
-    value = msg;
+    if (msg.ok) {
+      value = msg.data;
+    } else {
+      alert("Document deleted!");
+      void goto("../");
+    }
   });
 
   onMount(() => {
