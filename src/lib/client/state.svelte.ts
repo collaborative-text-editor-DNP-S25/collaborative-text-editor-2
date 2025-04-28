@@ -1,7 +1,6 @@
 import { io, type Socket } from "socket.io-client";
 
 import type {
-  DocumentContent,
   DocumentId,
 } from "$lib/server/domain/entities/Document";
 import type { ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
@@ -12,15 +11,12 @@ type OnMessageCallback = (message: string) => void;
 
 type GetAllDocumentsCallback = (documentIds: DocumentId[]) => void;
 
-type GetDocumentCallback = (documentContent: DocumentContent) => void;
 
 class ClientApi {
   private io: Socket<ServerToClientEvents, ClientToServerEvents>;
 
   private onMessageCallbacks = new Map<string, OnMessageCallback>();
   private getAllDocumentsCallbacks = new Map<string, GetAllDocumentsCallback>();
-  private getDocumentCallbacks = new Map<string, GetDocumentCallback>();
-
 
   constructor(serverUrl: string) {
     this.io = io(serverUrl, {
@@ -45,7 +41,7 @@ class ClientApi {
     });
 
     this.io.on("sendDocument", (documentContent) => {
-      this.getDocumentCallbacks.forEach((callback) => {
+      this.onMessageCallbacks.forEach((callback) => {
         callback(documentContent);
       });
     });
@@ -106,15 +102,6 @@ class ClientApi {
 
     return () => {
       this.onMessageCallbacks.delete(callbackId);
-    };
-  }
-
-  public onGetDocument(callback: GetDocumentCallback): () => void {
-    const callbackId = crypto.randomUUID();
-    this.getDocumentCallbacks.set(callbackId, callback);
-
-    return () => {
-      this.getDocumentCallbacks.delete(callbackId);
     };
   }
 }
