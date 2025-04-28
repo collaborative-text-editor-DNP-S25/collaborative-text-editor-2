@@ -18,9 +18,20 @@
     </button>
 
     {#each documentIds.value as docId, i (i)}
-      <a href={docId.id} class={className}>
-        {docId.id}
-      </a>
+      <li class="group relative">
+        <button
+          class="hover:bg-ctp-overlay0 active:text-ctp-red active:bg-ctp-overlay1 invisible absolute right-0 flex size-6 items-center justify-center rounded-full font-medium group-hover:visible"
+          onclick={() => {
+            api.deleteDocument(docId);
+            api.getAllDocuments();
+          }}
+        >
+          x
+        </button>
+        <a href={docId.id} class={className}>
+          {docId.id}
+        </a>
+      </li>
     {/each}
   </ul>
 </main>
