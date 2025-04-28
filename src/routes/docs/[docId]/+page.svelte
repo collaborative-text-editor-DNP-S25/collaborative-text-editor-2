@@ -36,6 +36,17 @@
     <h1 class="text-xl font-bold">
       {data.docId}
     </h1>
+
+    <div class="absolute right-0 flex flex-row gap-2">
+      <button
+        class="active:text-ctp-blue active:bg-ctp-surface1 hover:bg-ctp-surface0 flex w-20 items-center justify-center rounded-md p-2 font-medium hover:font-bold"
+        onclick={() => api.undo({ id: data.docId })}>Undo</button
+      >
+      <button
+        class="active:text-ctp-blue active:bg-ctp-surface1 hover:bg-ctp-surface0 flex w-20 items-center justify-center rounded-md p-2 font-medium hover:font-bold"
+        onclick={() => api.redo({ id: data.docId })}>Redo</button
+      >
+    </div>
   </header>
 
   <textarea
