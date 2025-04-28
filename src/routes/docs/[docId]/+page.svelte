@@ -14,7 +14,7 @@
 
   onMount(() => {
     api.enterDocument({ id: data.docId });
-    value = api.getDocument({ id: data.docId });
+    api.getDocument({ id: data.docId });
     return () => {
       api.exitDocument({ id: data.docId });
     };
