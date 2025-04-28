@@ -30,6 +30,9 @@ export default ts.config(
   },
   {
     files: ["**/*.svelte", "**/*.svelte.js", "**/*.svelte.ts"],
+    rules: {
+      "@typescript-eslint/no-confusing-void-expression": "off",
+    },
     languageOptions: {
       parserOptions: {
         projectService: true,
