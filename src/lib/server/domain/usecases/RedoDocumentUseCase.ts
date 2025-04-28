@@ -10,8 +10,11 @@ export default class RedoDocumenUseCase {
 
   invoke(docId: DocumentId): void {
     const document = this.documentRepo.redo(docId);
-    if (document) {
-      this.socketRepo.broadcast(docId, { ok: true, data: document.content });
+    
+    if (document === undefined) {
+      this.socketRepo.broadcast(docId, { ok: false });
+      return;
     }
+    this.socketRepo.broadcast(docId, { ok: true, data: document.content });
   }
 }
