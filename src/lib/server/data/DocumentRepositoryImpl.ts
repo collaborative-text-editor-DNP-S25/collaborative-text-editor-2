@@ -20,10 +20,15 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       content: "",
       timestamp: new Date(),
       versionHistory: [],
-      currentVersionIndex: -1,
+      currentVersionIndex: 0,
     };
+    const versionEntryNew : VersionEntry = {
+      content: "",
+      timestamp: new Date(),
+    };
+    // newDoc.versionHistory.push(versionEntryNew);
     this.documents.set(docId.id, newDoc);
-
+    // console.log(`content: ${newDoc.content}, index: ${newDoc.currentVersionIndex}, length: ${newDoc.versionHistory.length}, create`);
     return docId;
   }
 
@@ -44,29 +49,25 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       throw new Error(`Document with id ${docId.id} not found`);
     }
 
-    // const versionHistory = existingDoc.versionHistory;
-    // versionHistory.push({
-    //   content: existingDoc.content,
-    //   timestamp: existingDoc.timestamp,
-    // });
-
     if (document.content !== existingDoc.content) {
       existingDoc.versionHistory = existingDoc.versionHistory.slice(
         0,
         existingDoc.currentVersionIndex + 1,
       );
       existingDoc.versionHistory.push({
-        content: existingDoc.content,
-        timestamp: existingDoc.timestamp,
+        content: document.content,
+        timestamp: document.timestamp,
       });
       document.currentVersionIndex = existingDoc.versionHistory.length - 1;
     }
 
+    
     this.documents.set(docId.id, {
       ...document,
       timestamp: new Date(),
       versionHistory: existingDoc.versionHistory,
     });
+    // console.log(`content: ${existingDoc.content}, index: ${existingDoc.currentVersionIndex}, length: ${existingDoc.versionHistory.length}, update`);
   }
 
   deleteDocument(docId: DocumentId): DocumentId {
@@ -95,6 +96,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       currentVersionIndex: newIndex,
     };
     this.documents.set(docId.id, updatedDocument);
+    // console.log(`content: ${updatedDocument.content}, index: ${updatedDocument.currentVersionIndex}, length: ${updatedDocument.versionHistory.length}, undo`);
     return updatedDocument;
   }
 
@@ -118,6 +120,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       currentVersionIndex: newIndex,
     };
     this.documents.set(docId.id, updatedDocument);
+    // console.log(`content: ${updatedDocument.content}, index: ${updatedDocument.currentVersionIndex}, length: ${updatedDocument.versionHistory.length}, redo`);
     return updatedDocument;
   }
 
