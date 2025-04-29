@@ -15,7 +15,7 @@ export default class GetDocumentUseCase {
     if (doc == null) {
       return;
     } else {
-      this.socketRepo.sendDocument(client, { ok: true, data: doc.content });
+      this.socketRepo.sendDocument(client, { ok: true, data: doc });
     }
   }
 }

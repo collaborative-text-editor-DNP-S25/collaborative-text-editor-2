@@ -15,6 +15,6 @@ export default class RedoDocumentUseCase {
       this.socketRepo.broadcast(docId, { ok: false });
       return;
     }
-    this.socketRepo.broadcast(docId, { ok: true, data: document.content });
+    this.socketRepo.broadcast(docId, { ok: true, data: document });
   }
 }

@@ -11,7 +11,7 @@
   let value = $state<string>();
   api.onMessage((msg) => {
     if (msg.ok) {
-      value = msg.data;
+      value = msg.data.content;
     } else {
       alert("Document deleted!");
       void goto("../");
