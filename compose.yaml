@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    network_mode: host
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - WS_PORT=8952
+      - SERVER_URL=http://localhost:8952/
+    restart: unless-stopped
