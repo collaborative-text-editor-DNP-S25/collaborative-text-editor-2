@@ -1,4 +1,7 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
+import {
+  type DocumentId,
+  type VersionEntry,
+ } from "$lib/server/domain/entities/Document";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type { Document } from "$lib/server/domain/entities/Document";
 
@@ -120,5 +123,31 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     });
 
     return documentIds;
+  }
+
+  jump(docId: DocumentId, versionIndex: number): Document | undefined {
+    const document = this.documents.get(docId.id);
+    if (!document || versionIndex < 0 || versionIndex >= document.versionHistory.length) {
+      return undefined;
+    }
+
+    const newContent = document.versionHistory[versionIndex].content;
+    const updatedDocument: Document = {
+      ...document,
+      content: newContent,
+      timestamp: new Date(),
+      versionHistory: document.versionHistory,
+      currentVersionIndex: versionIndex,
+    };
+    this.documents.set(docId.id, updatedDocument);
+    return updatedDocument;
+  }
+
+  getVersionHistory(docId: DocumentId): VersionEntry[] {
+    const document = this.documents.get(docId.id);
+    if (!document) {
+      throw new Error(`Document with id ${docId} not found`);
+    }
+    return document.versionHistory;
   }
 }

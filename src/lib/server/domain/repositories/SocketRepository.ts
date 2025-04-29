@@ -1,4 +1,4 @@
-import { type DocumentId } from "$lib/server/domain/entities/Document";
+import { type DocumentId, type VersionEntry } from "$lib/server/domain/entities/Document";
 import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
 import type { ResponseMessage } from "../entities/ResponseMessage";
 
@@ -10,4 +10,5 @@ export default interface SocketRepository {
   unregisterClient(client: SocketClient, docId: DocumentId): Promise<void>;
   sendAllDocuments(client: SocketClient, documentIds: DocumentId[]): void;
   sendDocument(client: SocketClient, documentContent: ResponseMessage): void;
+  sendVersionHistory(clinet: SocketClient, versionHistory: VersionEntry[]): void;
 }

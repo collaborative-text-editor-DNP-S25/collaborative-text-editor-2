@@ -9,6 +9,8 @@ import UndoDocumentUseCase from "./usecases/UndoDocumentUsaCase";
 import RedoDocumentUseCase from "./usecases/RedoDocumentUseCase";
 import GetDocumentUseCase from "./usecases/GetDocumentUseCase";
 import GetAllDocumentsUseCase from "./usecases/GetAllDocumentsUseCase";
+import GetVersionHistoryUseCase from "./usecases/GetVersionHistoryUseCase";
+import JumpDocumentUseCase from "./usecases/JumpDocumentUseCase";
 
 export default class UseCaseContainer {
   createDocument: CreateDocumentUseCase;
@@ -20,6 +22,8 @@ export default class UseCaseContainer {
   redoDocument: RedoDocumentUseCase;
   getDocument: GetDocumentUseCase;
   getAllDocuments: GetAllDocumentsUseCase;
+  getVersionHistory: GetVersionHistoryUseCase;
+  jumpDocument: JumpDocumentUseCase;
 
   constructor(
     private documentRepo: DocumentRepository,
@@ -34,5 +38,7 @@ export default class UseCaseContainer {
     this.redoDocument = new RedoDocumentUseCase(documentRepo, socketRepo);
     this.getDocument = new GetDocumentUseCase(documentRepo, socketRepo);
     this.getAllDocuments = new GetAllDocumentsUseCase(documentRepo, socketRepo);
+    this.getVersionHistory = new GetVersionHistoryUseCase(documentRepo, socketRepo);
+    this.jumpDocument = new JumpDocumentUseCase(documentRepo, socketRepo);
   }
 }

@@ -1,6 +1,7 @@
 import {
   type DocumentId,
   type Document,
+  type VersionEntry,
 } from "$lib/server/domain/entities/Document";
 
 export default interface DocumentRepository {
@@ -11,4 +12,6 @@ export default interface DocumentRepository {
   undo(docId: DocumentId): Document | undefined;
   redo(docId: DocumentId): Document | undefined;
   getAllDocuments(): DocumentId[];
+  getVersionHistory(docId: DocumentId): VersionEntry[];
+  jump(docId: DocumentId, versionIndex: number): Document | undefined;
 }
