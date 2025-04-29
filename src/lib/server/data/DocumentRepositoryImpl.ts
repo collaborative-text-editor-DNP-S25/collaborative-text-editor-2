@@ -25,6 +25,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     const versionEntryNew : VersionEntry = {
       content: "",
       timestamp: new Date(),
+      versionIndex: 0,
     };
     // newDoc.versionHistory.push(versionEntryNew);
     this.documents.set(docId.id, newDoc);
@@ -57,6 +58,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       existingDoc.versionHistory.push({
         content: document.content,
         timestamp: document.timestamp,
+        versionIndex: existingDoc.versionHistory.length - 1,
       });
       document.currentVersionIndex = existingDoc.versionHistory.length - 1;
     }

@@ -6,6 +6,7 @@ export type DocumentContent = string;
 export interface VersionEntry {
   content: DocumentContent;
   timestamp: Date;
+  versionIndex: number;
 }
 
 export interface DocumentEntity {
