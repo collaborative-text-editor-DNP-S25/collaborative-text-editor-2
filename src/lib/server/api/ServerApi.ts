@@ -114,12 +114,16 @@ export default class ServerApi {
 
       socket.on("getVersionHistory", (docId) => {
         this.useCaseContainer.getVersionHistory.invoke(socket, docId);
-        console.log(`Client [${socket.id}] gets version history of document: ${docId.id}`);
+        console.log(
+          `Client [${socket.id}] gets version history of document: ${docId.id}`,
+        );
       });
 
       socket.on("jump", (docId, versionIndex) => {
         this.useCaseContainer.jumpDocument.invoke(socket, versionIndex);
-        console.log(`Client [${socket.id}] jumps to version ${versionIndex}: ${docId.id}`);
+        console.log(
+          `Client [${socket.id}] jumps to version ${versionIndex.toString()}: ${docId.id}`,
+        );
       });
     });
   }

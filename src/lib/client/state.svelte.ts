@@ -1,6 +1,6 @@
 import { io, type Socket } from "socket.io-client";
 
-import type { DocumentId } from "$lib/server/domain/entities/Document";
+import type { DocumentId } from "$lib/server/domain/entities/DocumentEntity";
 import type { ClientToServerEvents } from "$lib/server/domain/entities/events/ClientToServerEvents";
 import type { ServerToClientEvents } from "$lib/server/domain/entities/events/ServerToClientEvents";
 import type { Message } from "$lib/server/domain/repositories/SocketRepository";
@@ -26,9 +26,9 @@ class ClientApi {
   }
 
   private setupSocketHandlers() {
-    this.io.on("sendMessage", (message) => {
+    this.io.on("sendUpdateMessage", (document) => {
       this.onMessageCallbacks.forEach((callback) => {
-        callback(message);
+        callback(document);
       });
     });
 
@@ -38,9 +38,9 @@ class ClientApi {
       });
     });
 
-    this.io.on("sendDocument", (documentContent) => {
+    this.io.on("sendDocument", (document) => {
       this.onMessageCallbacks.forEach((callback) => {
-        callback(documentContent);
+        callback(document);
       });
     });
 

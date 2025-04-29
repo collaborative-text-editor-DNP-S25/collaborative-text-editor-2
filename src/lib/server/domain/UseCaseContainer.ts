@@ -38,7 +38,10 @@ export default class UseCaseContainer {
     this.redoDocument = new RedoDocumentUseCase(documentRepo, socketRepo);
     this.getDocument = new GetDocumentUseCase(documentRepo, socketRepo);
     this.getAllDocuments = new GetAllDocumentsUseCase(documentRepo, socketRepo);
-    this.getVersionHistory = new GetVersionHistoryUseCase(documentRepo, socketRepo);
+    this.getVersionHistory = new GetVersionHistoryUseCase(
+      documentRepo,
+      socketRepo,
+    );
     this.jumpDocument = new JumpDocumentUseCase(documentRepo, socketRepo);
   }
 }

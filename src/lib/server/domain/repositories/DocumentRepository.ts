@@ -1,17 +1,17 @@
 import {
   type DocumentId,
-  type Document,
+  type DocumentEntity,
   type VersionEntry,
-} from "$lib/server/domain/entities/Document";
+} from "$lib/server/domain/entities/DocumentEntity";
 
 export default interface DocumentRepository {
   createDocument(): DocumentId;
-  getDocument(docId: DocumentId): Document | undefined;
-  updateDocument(docId: DocumentId, document: Document): void;
+  getDocument(docId: DocumentId): DocumentEntity | undefined;
+  updateDocument(docId: DocumentId, document: DocumentEntity): void;
   deleteDocument(docId: DocumentId): DocumentId;
-  undo(docId: DocumentId): Document | undefined;
-  redo(docId: DocumentId): Document | undefined;
+  undo(docId: DocumentId): DocumentEntity | undefined;
+  redo(docId: DocumentId): DocumentEntity | undefined;
   getAllDocuments(): DocumentId[];
   getVersionHistory(docId: DocumentId): VersionEntry[];
-  jump(docId: DocumentId, versionIndex: number): Document | undefined;
+  jump(docId: DocumentId, versionIndex: number): DocumentEntity | undefined;
 }

@@ -1,10 +1,10 @@
-import type { DocumentContent } from "./Document";
+import type { DocumentEntity } from "./DocumentEntity";
 
 export type ResponseMessage = Success | Error;
 
 interface Success {
   ok: true;
-  data: DocumentContent;
+  data: DocumentEntity;
 }
 
 interface Error {

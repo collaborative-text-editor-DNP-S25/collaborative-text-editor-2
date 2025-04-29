@@ -1,21 +1,21 @@
 import {
   type DocumentId,
   type VersionEntry,
- } from "$lib/server/domain/entities/Document";
+} from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
-import type { Document } from "$lib/server/domain/entities/Document";
+import type { DocumentEntity } from "$lib/server/domain/entities/DocumentEntity";
 
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private id = 0;
   // Map to store the documents
-  private documents = new Map<string, Document>();
+  private documents = new Map<string, DocumentEntity>();
   private readonly ERROR_DOC_ID: DocumentId = { id: "doc-errorId" }; // Uniform type of non-existent document
 
   createDocument(): DocumentId {
     const docId: DocumentId = {
       id: `doc-${(this.id++).toString()}`,
     };
-    const newDoc: Document = {
+    const newDoc: DocumentEntity = {
       id: docId,
       content: "",
       timestamp: new Date(),
@@ -27,7 +27,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return docId;
   }
 
-  getDocument(docId: DocumentId): Document | undefined {
+  getDocument(docId: DocumentId): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
     if (document === undefined) {
       return undefined;
@@ -38,7 +38,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     };
   }
 
-  updateDocument(docId: DocumentId, document: Document): void {
+  updateDocument(docId: DocumentId, document: DocumentEntity): void {
     const existingDoc = this.documents.get(docId.id);
     if (!existingDoc) {
       throw new Error(`Document with id ${docId.id} not found`);
@@ -74,7 +74,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return exists ? docId : this.ERROR_DOC_ID;
   }
 
-  undo(docId: DocumentId): Document | undefined {
+  undo(docId: DocumentId): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
     if (!document || document.currentVersionIndex <= -1) {
       return undefined;
@@ -83,7 +83,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     const newIndex = document.currentVersionIndex - 1;
     const newContent =
       newIndex >= 0 ? document.versionHistory[newIndex].content : "";
-    const updatedDocument: Document = {
+    const updatedDocument: DocumentEntity = {
       ...document,
       content: newContent,
       timestamp: new Date(),
@@ -94,7 +94,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return updatedDocument;
   }
 
-  redo(docId: DocumentId): Document | undefined {
+  redo(docId: DocumentId): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
     if (
       !document ||
@@ -105,7 +105,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
 
     const newIndex = document.currentVersionIndex + 1;
     const newContent = document.versionHistory[newIndex].content;
-    const updatedDocument: Document = {
+    const updatedDocument: DocumentEntity = {
       ...document,
       content: newContent,
       timestamp: new Date(),
@@ -118,21 +118,25 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
 
   getAllDocuments(): DocumentId[] {
     const documentIds: DocumentId[] = [];
-    this.documents.forEach((value: Document, key: string) => {
+    this.documents.forEach((value: DocumentEntity, key: string) => {
       documentIds.push({ id: key });
     });
 
     return documentIds;
   }
 
-  jump(docId: DocumentId, versionIndex: number): Document | undefined {
+  jump(docId: DocumentId, versionIndex: number): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
-    if (!document || versionIndex < 0 || versionIndex >= document.versionHistory.length) {
+    if (
+      !document ||
+      versionIndex < 0 ||
+      versionIndex >= document.versionHistory.length
+    ) {
       return undefined;
     }
 
     const newContent = document.versionHistory[versionIndex].content;
-    const updatedDocument: Document = {
+    const updatedDocument: DocumentEntity = {
       ...document,
       content: newContent,
       timestamp: new Date(),
@@ -146,7 +150,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
   getVersionHistory(docId: DocumentId): VersionEntry[] {
     const document = this.documents.get(docId.id);
     if (!document) {
-      throw new Error(`Document with id ${docId} not found`);
+      throw new Error(`Document with id ${docId.id.toString()} not found`);
     }
     return document.versionHistory;
   }

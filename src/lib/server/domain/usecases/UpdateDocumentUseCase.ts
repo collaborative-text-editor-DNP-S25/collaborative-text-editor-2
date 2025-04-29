@@ -1,8 +1,8 @@
 import {
   type DocumentContent,
   type DocumentId,
-  type Document,
-} from "$lib/server/domain/entities/Document";
+  type DocumentEntity,
+} from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type SocketRepository from "$lib/server/domain/repositories/SocketRepository";
 
@@ -22,7 +22,7 @@ export default class UpdateDocumentUseCase {
 
     const updatedVersionHistory = document.versionHistory;
 
-    const updatedDocument: Document = {
+    const updatedDocument: DocumentEntity = {
       id: docId,
       content: newContent,
       timestamp: new Date(),
@@ -32,6 +32,6 @@ export default class UpdateDocumentUseCase {
 
     this.documentRepo.updateDocument(docId, updatedDocument);
 
-    this.socketRepo.broadcast(docId, { ok: true, data: newContent });
+    this.socketRepo.broadcast(docId, { ok: true, data: updatedDocument });
   }
 }

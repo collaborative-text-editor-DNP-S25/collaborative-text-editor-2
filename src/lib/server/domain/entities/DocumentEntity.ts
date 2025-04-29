@@ -8,7 +8,7 @@ export interface VersionEntry {
   timestamp: Date;
 }
 
-export interface Document {
+export interface DocumentEntity {
   id: DocumentId;
   content: DocumentContent;
   timestamp: Date;
