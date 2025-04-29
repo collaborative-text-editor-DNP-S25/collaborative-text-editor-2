@@ -76,8 +76,12 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
 
   undo(docId: DocumentId): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
-    if (!document || document.currentVersionIndex <= -1) {
+    if (!document) {
       return undefined;
+    }
+
+    if (document.currentVersionIndex <= -1) {
+      throw new Error(`Current version, ${document.currentVersionIndex.toString()} index is wrong`);
     }
 
     const newIndex = document.currentVersionIndex - 1;
@@ -96,11 +100,12 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
 
   redo(docId: DocumentId): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
-    if (
-      !document ||
-      document.currentVersionIndex >= document.versionHistory.length - 1
-    ) {
+    if (!document) {
       return undefined;
+    }
+
+    if (document.currentVersionIndex >= document.versionHistory.length - 1) {
+      throw new Error(`Current version, ${document.currentVersionIndex.toString()} index is wrong`);
     }
 
     const newIndex = document.currentVersionIndex + 1;
