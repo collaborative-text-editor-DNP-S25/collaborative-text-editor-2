@@ -20,13 +20,15 @@ export default class UpdateDocumentUseCase {
       return;
     }
 
-    const updatedVersionHistory = document.versionHistory;
+    if (document.content === newContent) {
+      return;
+    }
 
     const updatedDocument: DocumentEntity = {
       id: docId,
       content: newContent,
       timestamp: new Date(),
-      versionHistory: updatedVersionHistory,
+      versionHistory: document.versionHistory,
       currentVersionIndex: document.currentVersionIndex + 1,
     };
 
