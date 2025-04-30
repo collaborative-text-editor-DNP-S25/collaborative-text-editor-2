@@ -22,6 +22,7 @@ export default class ServerApi {
     SubscriberData
   >;
 
+  // Api collects all data from domain and data layers
   documentRepo: DocumentRepository;
   socketRepo: SocketRepository;
   useCaseContainer: UseCaseContainer;
@@ -49,7 +50,7 @@ export default class ServerApi {
     );
     this.setupSocketHandlers();
   }
-
+  // Usage of the operations on socket
   private setupSocketHandlers(): void {
     this.io.on("connection", (socket: SocketClient) => {
       console.log(`Client connected: ${socket.id}`);

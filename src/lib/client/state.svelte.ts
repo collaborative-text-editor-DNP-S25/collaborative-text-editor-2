@@ -7,8 +7,8 @@ import type { Message } from "$lib/server/domain/repositories/SocketRepository";
 import type { ResponseMessage } from "$lib/server/domain/entities/ResponseMessage";
 import type { versionIndex } from "$lib/server/domain/entities/DocumentEntity";
 
+// Using Map with UUID keys to handle multiple subscribers and allow clean cleanup
 type OnMessageCallback = (message: ResponseMessage) => void;
-
 type GetAllDocumentsCallback = (documentIds: DocumentId[]) => void;
 
 class ClientApi {
@@ -19,20 +19,21 @@ class ClientApi {
 
   constructor(serverUrl: string) {
     this.io = io(serverUrl, {
-      autoConnect: true,
-      reconnection: true,
-      transports: ["websocket"],
+      autoConnect: true, // Automatically establish connection on creation
+      reconnection: true, // Enable automatic reconnection attempts
+      transports: ["websocket"], // Force WebSocket transport only
     });
     this.setupSocketHandlers();
   }
 
   private setupSocketHandlers() {
+     // Central handler for real-time document updates
     this.io.on("sendUpdateMessage", (document) => {
       this.onMessageCallbacks.forEach((callback) => {
         callback(document);
       });
     });
-
+    // Handler for initial document list population
     this.io.on("sendDocumentIds", (documentIds) => {
       this.getAllDocumentsCallbacks.forEach((callback) => {
         callback(documentIds);
@@ -44,7 +45,7 @@ class ClientApi {
         callback(document);
       });
     });
-
+    // Error handling for connection issues
     this.io.on("connect_error", (err) => {
       console.error("Connection error:", err.message);
     });
@@ -91,9 +92,9 @@ class ClientApi {
   }
 
   public onGetAllDocuments(callback: GetAllDocumentsCallback): () => void {
-    const callbackId = crypto.randomUUID();
+    const callbackId = crypto.randomUUID(); // Unique ID for safe callback management
     this.getAllDocumentsCallbacks.set(callbackId, callback);
-
+    // Return cleanup function to prevent memory leaks
     return () => {
       this.getAllDocumentsCallbacks.delete(callbackId);
     };
@@ -103,15 +104,18 @@ class ClientApi {
     const callbackId = crypto.randomUUID();
     this.onMessageCallbacks.set(callbackId, callback);
 
+    // Allows components to unsubscribe from updates when unmounted
     return () => {
       this.onMessageCallbacks.delete(callbackId);
     };
   }
 }
 
+// Svelte's $state for reactive store management
 export const api = $state(new ClientApi("http://localhost:8952/"));
 
+// Reactive document list synchronized with server state
 export const documentIds = $state({ value: [] as DocumentId[] });
 api.onGetAllDocuments((newDocumentIds) => {
-  documentIds.value = newDocumentIds;
+  documentIds.value = newDocumentIds; // Update state when server sends new list
 });

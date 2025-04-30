@@ -22,6 +22,7 @@ export default class SocketRepositoryImpl implements SocketRepository {
   ) {}
 
   broadcast(docId: DocumentId, message: ResponseMessage): void {
+    // Send to all clients in document-specific room
     this.io.to(docId.id).emit("sendUpdateMessage", message);
   }
 
@@ -41,8 +42,9 @@ export default class SocketRepositoryImpl implements SocketRepository {
   }
 
   async registerClient(client: SocketClient, docId: DocumentId): Promise<void> {
+    // Join document room and store metadata
     await client.join(docId.id);
-    client.data.docId = docId;
+    client.data.docId = docId; // Track client's current document
   }
 
   async unregisterClient(
