@@ -11,9 +11,17 @@
   let { data }: PageProps = $props();
 
   let document = $state<DocumentEntity>();
+  let anyUpdates = $state(false);
   let value = $state<string>();
   $effect(() => {
-    value = document !== undefined ? document.content : "";
+    if (document !== undefined) {
+      if (document.versionHistory.length > 0) {
+        anyUpdates = true;
+      }
+      value = document.content;
+    } else {
+      value = "";
+    }
   });
 
   api.onMessage((msg) => {
@@ -44,7 +52,7 @@
       <span>{data.docId}</span>
       {#if document !== undefined}
         <span class="text-ctp-subtext0">/</span>
-        <span>{document.currentVersionIndex + 1}</span>
+        <span>{anyUpdates ? document.currentVersionIndex + 1 : 0}</span>
       {/if}
     </h1>
 
@@ -65,6 +73,7 @@
       class="focus:border-ctp-blue border-ctp-overlay0 h-full w-full resize-none rounded-xl border-2 p-2 outline-none"
       bind:value
       oninput={(ev) => {
+        anyUpdates = true;
         api.updateDocument(
           { id: data.docId },
           (ev as unknown as { target: { value: string } }).target.value,
@@ -101,7 +110,9 @@
               </time>
             </flex>
             <button
-              class="bg-ctp-surface0 hover:bg-ctp-overlay0 flex min-h-8 w-full flex-col rounded-lg px-2 py-1 text-left hover:cursor-pointer"
+              class="{version.versionIndex + 1 == document.currentVersionIndex
+                ? 'bg-ctp-green-900 hover:bg-ctp-green-700 active:bg-ctp-green-500 text-ctp-base'
+                : 'bg-ctp-surface0 hover:bg-ctp-surface1 active:bg-ctp-surface2'} flex min-h-8 w-full flex-col rounded-lg px-2 py-1 text-left font-medium hover:cursor-pointer"
               onclick={() => {
                 api.jump({ id: data.docId }, version.versionIndex);
               }}
