@@ -18,7 +18,7 @@ docker compose up --build
 
 - [pnpm](https://github.com/pnpm/pnpm) (Node.js package manager)
 
-## Developing
+#### Developing
 
 Once you've created a project and installed dependencies with `pnpm install`,
 start a development server:
@@ -31,7 +31,7 @@ pnpm run dev
 pnpm run dev -- --open
 ```
 
-## Building
+#### Building
 
 To create a production version of your app:
 
