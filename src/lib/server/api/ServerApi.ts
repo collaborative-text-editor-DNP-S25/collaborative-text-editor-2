@@ -50,6 +50,7 @@ export default class ServerApi {
     );
     this.setupSocketHandlers();
   }
+  
   // Usage of the operations on socket
   private setupSocketHandlers(): void {
     this.io.on("connection", (socket: SocketClient) => {
@@ -111,13 +112,6 @@ export default class ServerApi {
       socket.on("getDocument", (docId) => {
         this.useCaseContainer.getDocument.invoke(socket, docId);
         console.log(`Client [${socket.id}] gets document: ${docId.id}`);
-      });
-
-      socket.on("getVersionHistory", (docId) => {
-        this.useCaseContainer.getVersionHistory.invoke(socket, docId);
-        console.log(
-          `Client [${socket.id}] gets version history of document: ${docId.id}`,
-        );
       });
 
       socket.on("jump", (docId, versionIndex) => {

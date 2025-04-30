@@ -3,6 +3,7 @@ import {
   type DocumentEntity,
   type VersionEntry,
 } from "$lib/server/domain/entities/DocumentEntity";
+
 // Interface defining operations for documents
 export default interface DocumentRepository {
   // Core CRUD operations

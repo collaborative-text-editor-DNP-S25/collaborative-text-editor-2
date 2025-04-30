@@ -17,5 +17,5 @@ export interface DocumentEntity {
   content: DocumentContent;
   timestamp: Date; // Last modification time
   versionHistory: VersionEntry[]; // Audit trail of changes
-  currentVersionIndex: number; // Number of current version
+  currentVersionIndex: number; // ID of current version
 }

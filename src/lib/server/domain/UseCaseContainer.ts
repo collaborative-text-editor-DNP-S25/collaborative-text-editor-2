@@ -9,10 +9,10 @@ import UndoDocumentUseCase from "./usecases/UndoDocumentUsaCase";
 import RedoDocumentUseCase from "./usecases/RedoDocumentUseCase";
 import GetDocumentUseCase from "./usecases/GetDocumentUseCase";
 import GetAllDocumentsUseCase from "./usecases/GetAllDocumentsUseCase";
-import GetVersionHistoryUseCase from "./usecases/GetVersionHistoryUseCase";
 import JumpDocumentUseCase from "./usecases/JumpDocumentUseCase";
 
-export default class UseCaseContainer { // Centralized access point for all application use cases
+// Centralized access point for all use cases
+export default class UseCaseContainer {
   createDocument: CreateDocumentUseCase; 
   deleteDocument: DeleteDocumentUseCase;
   enterDocument: EnterDocumentUseCase;
@@ -22,7 +22,6 @@ export default class UseCaseContainer { // Centralized access point for all appl
   redoDocument: RedoDocumentUseCase;
   getDocument: GetDocumentUseCase;
   getAllDocuments: GetAllDocumentsUseCase;
-  getVersionHistory: GetVersionHistoryUseCase;
   jumpDocument: JumpDocumentUseCase;
   
 
@@ -40,10 +39,6 @@ export default class UseCaseContainer { // Centralized access point for all appl
     this.redoDocument = new RedoDocumentUseCase(documentRepo, socketRepo);
     this.getDocument = new GetDocumentUseCase(documentRepo, socketRepo);
     this.getAllDocuments = new GetAllDocumentsUseCase(documentRepo, socketRepo);
-    this.getVersionHistory = new GetVersionHistoryUseCase(
-      documentRepo,
-      socketRepo,
-    );
     this.jumpDocument = new JumpDocumentUseCase(documentRepo, socketRepo);
   }
 }

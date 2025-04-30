@@ -6,8 +6,7 @@ import {
 } from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 
-// Implementation of the Document functionality 
-
+// Implementation of the Document Repo functionality 
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private id = 0; // Simple counter-based ID generation
   private documents = new Map<string, DocumentEntity>(); // In-memory document storage (on RAM of localhost)
@@ -26,18 +25,15 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       versionHistory: [],
       currentVersionIndex: 0,
     };
-    // Create initial version entry
-    const versionEntryNew: VersionEntry = {
-      content: "",
-      timestamp: new Date(),
-      versionIndex: 0,
-    };
+    // Add document to the history
     this.documents.set(docId.id, newDoc);
     return docId;
   }
 
   getDocument(docId: DocumentId): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
+
+    // if there is no corresponding document
     if (document === undefined) {
       return undefined;
     }
@@ -49,9 +45,11 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
 
   updateDocument(docId: DocumentId, document: DocumentEntity): void {
     const existingDoc = this.documents.get(docId.id);
+
     if (!existingDoc) {
       throw new Error(`Document with id ${docId.id} not found`);
     }
+    
     // Maintain version history when content changes
     if (document.content !== existingDoc.content) {
       // Trim history beyond current version before adding new entry

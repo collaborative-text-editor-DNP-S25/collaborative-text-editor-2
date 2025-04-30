@@ -6,6 +6,7 @@ import { type SocketClient } from "$lib/server/domain/entities/SocketClient";
 import type { ResponseMessage } from "../entities/ResponseMessage";
 
 export type Message = string;
+
 // Interface defining real-time communication operations
 export default interface SocketRepository {
   // Broadcast message to all clients in a document room

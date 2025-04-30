@@ -1,4 +1,4 @@
-import type { DocumentId, VersionEntry } from "../DocumentEntity";
+import type { DocumentId } from "../DocumentEntity";
 import type { ResponseMessage } from "../ResponseMessage";
 
 // Defines server-initiated socket events
@@ -7,5 +7,4 @@ export interface ServerToClientEvents {
   // Next functions are self-explanatory
   sendDocumentIds: (documentIds: DocumentId[]) => void;
   sendDocument: (documentContent: ResponseMessage) => void;
-  sendVersionHistory: (versionHistory: VersionEntry[]) => void;
 }

@@ -33,13 +33,13 @@ class ClientApi {
         callback(document);
       });
     });
-    // Handler for initial document list population
+    // Handler for initial document list "files"
     this.io.on("sendDocumentIds", (documentIds) => {
       this.getAllDocumentsCallbacks.forEach((callback) => {
         callback(documentIds);
       });
     });
-
+    // Handler for document loading by the front end needs
     this.io.on("sendDocument", (document) => {
       this.onMessageCallbacks.forEach((callback) => {
         callback(document);
@@ -94,6 +94,7 @@ class ClientApi {
   public onGetAllDocuments(callback: GetAllDocumentsCallback): () => void {
     const callbackId = crypto.randomUUID(); // Unique ID for safe callback management
     this.getAllDocumentsCallbacks.set(callbackId, callback);
+    
     // Return cleanup function to prevent memory leaks
     return () => {
       this.getAllDocumentsCallbacks.delete(callbackId);
@@ -101,7 +102,7 @@ class ClientApi {
   }
 
   public onMessage(callback: OnMessageCallback): () => void {
-    const callbackId = crypto.randomUUID();
+    const callbackId = crypto.randomUUID(); // Unique ID for safe callback management
     this.onMessageCallbacks.set(callbackId, callback);
 
     // Allows components to unsubscribe from updates when unmounted
