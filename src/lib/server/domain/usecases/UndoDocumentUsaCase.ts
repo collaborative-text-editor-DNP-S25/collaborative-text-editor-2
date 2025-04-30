@@ -13,13 +13,14 @@ export default class UndoDocumentUseCase {
       const document = this.documentRepo.undo(docId);
 
       if (document === undefined) {
+        // Broadcast failure to all clients in the document's room
         this.socketRepo.broadcast(docId, { ok: false });
         return;
       }
-
+      // Broadcast succesfull undo to all clients in the document's room
       this.socketRepo.broadcast(docId, { ok: true, data: document });
     } catch {
-      // skip
+      // Silently ignore errors when undo operation is unavailable
     }
   }
 }

@@ -7,16 +7,19 @@ import {
   type VersionEntry,
 } from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
+
+// Implementation of the Document functionality 
 export default class DocumentRepositoryImpl implements DocumentRepository {
-  private id = 0;
-  // Map to store the documents
-  private documents = new Map<string, DocumentEntity>();
-  private readonly ERROR_DOC_ID: DocumentId = { id: "doc-errorId" }; // Uniform type of non-existent document
+  private id = 0; // Simple counter-based ID generation
+  private documents = new Map<string, DocumentEntity>(); // In-memory document storage (on RAM of localhost)
+  private readonly ERROR_DOC_ID: DocumentId = { id: "doc-errorId" }; // Uniform type of non-existent/error document
 
   createDocument(): DocumentId {
+    // Generate sequential document IDs
     const docId: DocumentId = {
       id: `doc-${(this.id++).toString()}`,
     };
+    // Initialize document with empty content and version history
     const newDoc: DocumentEntity = {
       id: docId,
       content: "",
@@ -24,14 +27,13 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       versionHistory: [],
       currentVersionIndex: 0,
     };
+    // Create initial version entry
     const versionEntryNew: VersionEntry = {
       content: "",
       timestamp: new Date(),
       versionIndex: 0,
     };
-    // newDoc.versionHistory.push(versionEntryNew);
     this.documents.set(docId.id, newDoc);
-    // console.log(`content: ${newDoc.content}, index: ${newDoc.currentVersionIndex}, length: ${newDoc.versionHistory.length}, create`);
     return docId;
   }
 
@@ -51,8 +53,9 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     if (!existingDoc) {
       throw new Error(`Document with id ${docId.id} not found`);
     }
-
+    // Maintain version history when content changes
     if (document.content !== existingDoc.content) {
+      // Trim history beyond current version before adding new entry
       existingDoc.versionHistory = existingDoc.versionHistory.slice(
         0,
         existingDoc.currentVersionIndex + 1,
@@ -61,10 +64,11 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
         0,
         document.currentVersionIndex + 1,
       );
+      // Add new version entry to history
       existingDoc.versionHistory.push({
         content: document.content,
         timestamp: document.timestamp,
-        versionIndex: existingDoc.versionHistory.length - 1,
+        versionIndex: existingDoc.versionHistory.length - 1, // Maintain 0-based index
       });
       document.versionHistory.push({
         content: document.content,
@@ -79,7 +83,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       timestamp: new Date(),
       versionHistory: existingDoc.versionHistory,
     });
-    // console.log(`content: ${existingDoc.content}, index: ${existingDoc.currentVersionIndex}, length: ${existingDoc.versionHistory.length}, update`);
   }
 
   deleteDocument(docId: DocumentId): DocumentId {
@@ -100,6 +103,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     const newIndex = document.currentVersionIndex - 1;
+    // Handle edge case for empty document history
     const newContent =
       newIndex >= 0 ? document.versionHistory[newIndex].content : "";
     const updatedDocument: DocumentEntity = {
@@ -110,7 +114,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       currentVersionIndex: newIndex,
     };
     this.documents.set(docId.id, updatedDocument);
-    // console.log(`content: ${updatedDocument.content}, index: ${updatedDocument.currentVersionIndex}, length: ${updatedDocument.versionHistory.length}, undo`);
     return updatedDocument;
   }
 
@@ -136,7 +139,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       currentVersionIndex: newIndex,
     };
     this.documents.set(docId.id, updatedDocument);
-    // console.log(`content: ${updatedDocument.content}, index: ${updatedDocument.currentVersionIndex}, length: ${updatedDocument.versionHistory.length}, redo`);
     return updatedDocument;
   }
 
@@ -151,7 +153,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
 
   jump(docId: DocumentId, verIndex: versionIndex): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
-    verIndex += 1; // constant +1 to handle scewing 0-indexing to 1-indexing
+    verIndex += 1; // Adjust for client-side 0-index vs server-side 1-index
     if (
       !document ||
       verIndex < 0 ||

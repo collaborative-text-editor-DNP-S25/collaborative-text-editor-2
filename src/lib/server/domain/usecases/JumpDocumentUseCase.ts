@@ -12,9 +12,11 @@ export default class JumpDocumentUseCase {
     const document = this.documentRepo.jump(docId, verIndex);
 
     if (document === undefined) {
+      // Broadcast failure to all clients in the document's room
       this.socketRepo.broadcast(docId, { ok: false });
       return;
     }
+    // Broadcast success to all clients in the document's room
     this.socketRepo.broadcast(docId, { ok: true, data: document });
   }
 }

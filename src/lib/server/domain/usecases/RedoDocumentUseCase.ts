@@ -13,13 +13,14 @@ export default class RedoDocumentUseCase {
       const document = this.documentRepo.redo(docId);
 
       if (document === undefined) {
+        // Broadcast failure to all clients in the document's room
         this.socketRepo.broadcast(docId, { ok: false });
         return;
       }
-
+      // Broadcast successful redo to all clients in the document's room
       this.socketRepo.broadcast(docId, { ok: true, data: document });
     } catch {
-      // skip
+      // Silently ignore errors when redo operation is unavailable
     }
   }
 }

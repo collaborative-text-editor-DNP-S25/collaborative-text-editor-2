@@ -12,8 +12,8 @@ import GetAllDocumentsUseCase from "./usecases/GetAllDocumentsUseCase";
 import GetVersionHistoryUseCase from "./usecases/GetVersionHistoryUseCase";
 import JumpDocumentUseCase from "./usecases/JumpDocumentUseCase";
 
-export default class UseCaseContainer {
-  createDocument: CreateDocumentUseCase;
+export default class UseCaseContainer { // Centralized access point for all application use cases
+  createDocument: CreateDocumentUseCase; 
   deleteDocument: DeleteDocumentUseCase;
   enterDocument: EnterDocumentUseCase;
   exitDocument: ExitDocumentUseCase;
@@ -24,11 +24,13 @@ export default class UseCaseContainer {
   getAllDocuments: GetAllDocumentsUseCase;
   getVersionHistory: GetVersionHistoryUseCase;
   jumpDocument: JumpDocumentUseCase;
+  
 
   constructor(
     private documentRepo: DocumentRepository,
     private socketRepo: SocketRepository,
   ) {
+    // Initialize all use cases with shared repository dependencies
     this.enterDocument = new EnterDocumentUseCase(socketRepo);
     this.createDocument = new CreateDocumentUseCase(documentRepo);
     this.deleteDocument = new DeleteDocumentUseCase(documentRepo);

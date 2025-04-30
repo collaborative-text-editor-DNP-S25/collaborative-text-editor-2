@@ -4,6 +4,7 @@ import { type DocumentEntity } from "$lib/server/domain/entities/DocumentEntity"
 import type SocketRepository from "../repositories/SocketRepository";
 import type { SocketClient } from "../entities/SocketClient";
 
+// Class name should be GetVersionHistoryUseCase to match the file name and purpose
 export default class GetDocumentUseCase {
   constructor(
     private documentRepo: DocumentRepository,
@@ -15,6 +16,7 @@ export default class GetDocumentUseCase {
     if (doc == null) {
       return;
     } else {
+      // Explicitly send version history via socket
       this.socketRepo.sendDocument(client, { ok: true, data: doc });
     }
   }

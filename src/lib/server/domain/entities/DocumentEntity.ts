@@ -4,16 +4,18 @@ export interface DocumentId {
 export type DocumentContent = string;
 export type versionIndex = number;
 
+// Data structure representing version entity
 export interface VersionEntry {
   content: DocumentContent;
   timestamp: Date;
   versionIndex: number;
 }
 
+// Core data structure representing document state
 export interface DocumentEntity {
   id: DocumentId;
   content: DocumentContent;
-  timestamp: Date;
-  versionHistory: VersionEntry[];
-  currentVersionIndex: number;
+  timestamp: Date; // Last modification time
+  versionHistory: VersionEntry[]; // Audit trail of changes
+  currentVersionIndex: number; // Number of current version
 }

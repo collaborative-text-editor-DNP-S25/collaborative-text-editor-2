@@ -16,24 +16,27 @@ export default class UpdateDocumentUseCase {
     const document = this.documentRepo.getDocument(docId);
 
     if (document === undefined) {
+      // Broadcast failure to all clients in the document's room
       this.socketRepo.broadcast(docId, { ok: false });
       return;
     }
 
+    // Prevent unnecessary updates and version history bloat
     if (document.content === newContent) {
       return;
     }
 
+    // Create new document version entry while preserving history
     const updatedDocument: DocumentEntity = {
       id: docId,
       content: newContent,
       timestamp: new Date(),
       versionHistory: document.versionHistory,
-      currentVersionIndex: document.currentVersionIndex + 1,
+      currentVersionIndex: document.currentVersionIndex + 1, // Increment version pointer
     };
 
     this.documentRepo.updateDocument(docId, updatedDocument);
-
+    // Broadcast successful update to all clients in the document's room
     this.socketRepo.broadcast(docId, { ok: true, data: updatedDocument });
   }
 }
