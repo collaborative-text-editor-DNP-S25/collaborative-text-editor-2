@@ -1,14 +1,13 @@
-import type {
-  DocumentEntity,
-  versionIndex,
-} from "$lib/server/domain/entities/DocumentEntity";
 import {
+  type DocumentEntity,
   type DocumentId,
   type VersionEntry,
+  type versionIndex,
 } from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 
 // Implementation of the Document functionality 
+
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private id = 0; // Simple counter-based ID generation
   private documents = new Map<string, DocumentEntity>(); // In-memory document storage (on RAM of localhost)

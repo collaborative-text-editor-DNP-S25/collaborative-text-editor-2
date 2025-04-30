@@ -1,15 +1,29 @@
-# sv
+# Project Setup Guide
 
-Everything you need to build a Svelte project, powered by
-[`sv`](https://github.com/sveltejs/cli).
+You should be able to access the service with these URL:
 
-## Developing
+- Website: http://localhost:4713
+
+## Docker (Recommended)
+
+This command will launch the services from [`compose.yaml`](`/compose.yaml`):
+
+```bash
+docker compose up --build
+```
+
+## Manual Setup (Fallback)
+
+### Requirements
+
+- [pnpm](https://github.com/pnpm/pnpm) (Node.js package manager)
+
+#### Developing
 
 Once you've created a project and installed dependencies with `pnpm install`,
 start a development server:
 
 ```bash
-cp .env.example .env
 
 pnpm run dev
 
@@ -17,7 +31,7 @@ pnpm run dev
 pnpm run dev -- --open
 ```
 
-## Building
+#### Building
 
 To create a production version of your app:
 
