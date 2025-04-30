@@ -1,10 +1,12 @@
+import type {
+  DocumentEntity,
+  versionIndex,
+} from "$lib/server/domain/entities/DocumentEntity";
 import {
   type DocumentId,
   type VersionEntry,
 } from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
-import type { DocumentEntity } from "$lib/server/domain/entities/DocumentEntity";
-import type { versionIndex } from "$lib/server/domain/entities/DocumentEntity";
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private id = 0;
   // Map to store the documents
@@ -55,10 +57,19 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
         0,
         existingDoc.currentVersionIndex + 1,
       );
+      document.versionHistory = existingDoc.versionHistory.slice(
+        0,
+        document.currentVersionIndex + 1,
+      );
       existingDoc.versionHistory.push({
         content: document.content,
         timestamp: document.timestamp,
         versionIndex: existingDoc.versionHistory.length - 1,
+      });
+      document.versionHistory.push({
+        content: document.content,
+        timestamp: document.timestamp,
+        versionIndex: document.versionHistory.length - 1,
       });
       document.currentVersionIndex = existingDoc.versionHistory.length - 1;
     }

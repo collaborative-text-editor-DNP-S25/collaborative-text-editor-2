@@ -59,7 +59,14 @@
     <div class="absolute right-0 flex flex-row gap-2">
       <button
         class="active:text-ctp-blue active:bg-ctp-surface1 hover:bg-ctp-surface0 flex w-20 items-center justify-center rounded-md p-2 font-medium hover:font-bold"
-        onclick={() => api.undo({ id: data.docId })}>{m.undo()}</button
+        onclick={() => {
+          if (
+            document !== undefined &&
+            document.currentVersionIndex + 1 !== 1
+          ) {
+            api.undo({ id: data.docId });
+          }
+        }}>{m.undo()}</button
       >
       <button
         class="active:text-ctp-blue active:bg-ctp-surface1 hover:bg-ctp-surface0 flex w-20 items-center justify-center rounded-md p-2 font-medium hover:font-bold"
@@ -85,11 +92,16 @@
             (ev.shiftKey && ev.key.toLowerCase() == "z") ||
             ev.key.toLowerCase() == "y"
           ) {
+            ev.preventDefault();
             api.redo({ id: data.docId });
-            ev.preventDefault();
           } else if (!ev.shiftKey && ev.key.toLowerCase() == "z") {
-            api.undo({ id: data.docId });
             ev.preventDefault();
+            if (
+              document !== undefined &&
+              document.currentVersionIndex + 1 !== 1
+            ) {
+              api.undo({ id: data.docId });
+            }
           }
         }
       }}
