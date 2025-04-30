@@ -8,9 +8,9 @@ You should be able to access the service with these URL:
 
 This command will launch the services from [`compose.yaml`](`/compose.yaml`):
 
-'''bash
+```bash
 docker compose up --build
-'''
+```
 
 ## Manual Setup (Fallback)
 
