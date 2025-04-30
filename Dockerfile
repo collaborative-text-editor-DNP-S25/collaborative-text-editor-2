@@ -5,24 +5,21 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Build stage
 FROM base AS build
-WORKDIR /app
+WORKDIR /app/
 
 # Set environment variables
 ENV NODE_ENV=production
-ENV WS_PORT=8952
-ENV SERVER_URL=http://localhost:8952/
 
 # Copy package files first for better layer caching
-COPY pnpm-lock.yaml* package.json ./
+COPY pnpm-lock.yaml package.json ./
 
 # Install production-only dependencies
 RUN pnpm install --frozen-lockfile --prod=false
 
 # Copy source files
-COPY . .
+COPY ./ ./
 
 # Build application
 RUN pnpm build
 
 CMD ["pnpm", "preview"]
-
