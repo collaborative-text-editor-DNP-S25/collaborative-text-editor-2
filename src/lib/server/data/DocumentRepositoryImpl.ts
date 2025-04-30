@@ -1,12 +1,11 @@
-import type {
-  DocumentEntity,
-  versionIndex,
-} from "$lib/server/domain/entities/DocumentEntity";
 import {
+  type DocumentEntity,
   type DocumentId,
   type VersionEntry,
+  type versionIndex,
 } from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
+
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private id = 0;
   // Map to store the documents
@@ -24,14 +23,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       versionHistory: [],
       currentVersionIndex: 0,
     };
-    const versionEntryNew: VersionEntry = {
-      content: "",
-      timestamp: new Date(),
-      versionIndex: 0,
-    };
-    // newDoc.versionHistory.push(versionEntryNew);
     this.documents.set(docId.id, newDoc);
-    // console.log(`content: ${newDoc.content}, index: ${newDoc.currentVersionIndex}, length: ${newDoc.versionHistory.length}, create`);
     return docId;
   }
 
@@ -79,7 +71,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       timestamp: new Date(),
       versionHistory: existingDoc.versionHistory,
     });
-    // console.log(`content: ${existingDoc.content}, index: ${existingDoc.currentVersionIndex}, length: ${existingDoc.versionHistory.length}, update`);
   }
 
   deleteDocument(docId: DocumentId): DocumentId {
@@ -110,7 +101,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       currentVersionIndex: newIndex,
     };
     this.documents.set(docId.id, updatedDocument);
-    // console.log(`content: ${updatedDocument.content}, index: ${updatedDocument.currentVersionIndex}, length: ${updatedDocument.versionHistory.length}, undo`);
     return updatedDocument;
   }
 
@@ -136,7 +126,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       currentVersionIndex: newIndex,
     };
     this.documents.set(docId.id, updatedDocument);
-    // console.log(`content: ${updatedDocument.content}, index: ${updatedDocument.currentVersionIndex}, length: ${updatedDocument.versionHistory.length}, redo`);
     return updatedDocument;
   }
 
