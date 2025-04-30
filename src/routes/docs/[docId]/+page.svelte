@@ -103,7 +103,7 @@
             <button
               class="bg-ctp-surface0 hover:bg-ctp-overlay0 flex min-h-8 w-full flex-col rounded-lg px-2 py-1 text-left hover:cursor-pointer"
               onclick={() => {
-                alert("Oops!");
+                api.jump({ id: data.docId }, version.versionIndex);
               }}
             >
               <p class="truncate">

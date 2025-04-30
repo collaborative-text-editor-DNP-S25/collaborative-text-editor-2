@@ -2,6 +2,7 @@ export interface DocumentId {
   id: string;
 }
 export type DocumentContent = string;
+export type versionIndex = number;
 
 export interface VersionEntry {
   content: DocumentContent;

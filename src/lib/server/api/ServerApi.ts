@@ -120,7 +120,7 @@ export default class ServerApi {
       });
 
       socket.on("jump", (docId, versionIndex) => {
-        this.useCaseContainer.jumpDocument.invoke(socket, versionIndex);
+        this.useCaseContainer.jumpDocument.invoke(docId, versionIndex);
         console.log(
           `Client [${socket.id}] jumps to version ${versionIndex.toString()}: ${docId.id}`,
         );

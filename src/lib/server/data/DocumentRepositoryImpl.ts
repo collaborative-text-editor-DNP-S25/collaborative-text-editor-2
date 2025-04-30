@@ -4,7 +4,7 @@ import {
 } from "$lib/server/domain/entities/DocumentEntity";
 import type DocumentRepository from "$lib/server/domain/repositories/DocumentRepository";
 import type { DocumentEntity } from "$lib/server/domain/entities/DocumentEntity";
-
+import type { versionIndex } from "$lib/server/domain/entities/DocumentEntity";
 export default class DocumentRepositoryImpl implements DocumentRepository {
   private id = 0;
   // Map to store the documents
@@ -22,7 +22,7 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       versionHistory: [],
       currentVersionIndex: 0,
     };
-    const versionEntryNew : VersionEntry = {
+    const versionEntryNew: VersionEntry = {
       content: "",
       timestamp: new Date(),
       versionIndex: 0,
@@ -63,7 +63,6 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
       document.currentVersionIndex = existingDoc.versionHistory.length - 1;
     }
 
-    
     this.documents.set(docId.id, {
       ...document,
       timestamp: new Date(),
@@ -84,7 +83,9 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     if (document.currentVersionIndex <= -1) {
-      throw new Error(`Current version, ${document.currentVersionIndex.toString()} index is wrong`);
+      throw new Error(
+        `Current version, ${document.currentVersionIndex.toString()} index is wrong`,
+      );
     }
 
     const newIndex = document.currentVersionIndex - 1;
@@ -109,7 +110,9 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     if (document.currentVersionIndex >= document.versionHistory.length - 1) {
-      throw new Error(`Current version, ${document.currentVersionIndex.toString()} index is wrong`);
+      throw new Error(
+        `Current version, ${document.currentVersionIndex.toString()} index is wrong`,
+      );
     }
 
     const newIndex = document.currentVersionIndex + 1;
@@ -135,23 +138,24 @@ export default class DocumentRepositoryImpl implements DocumentRepository {
     return documentIds;
   }
 
-  jump(docId: DocumentId, versionIndex: number): DocumentEntity | undefined {
+  jump(docId: DocumentId, verIndex: versionIndex): DocumentEntity | undefined {
     const document = this.documents.get(docId.id);
+    verIndex += 1; // constant +1 to handle scewing 0-indexing to 1-indexing
     if (
       !document ||
-      versionIndex < 0 ||
-      versionIndex >= document.versionHistory.length
+      verIndex < 0 ||
+      verIndex >= document.versionHistory.length
     ) {
       return undefined;
     }
 
-    const newContent = document.versionHistory[versionIndex].content;
+    const newContent = document.versionHistory[verIndex].content;
     const updatedDocument: DocumentEntity = {
       ...document,
       content: newContent,
       timestamp: new Date(),
       versionHistory: document.versionHistory,
-      currentVersionIndex: versionIndex,
+      currentVersionIndex: verIndex,
     };
     this.documents.set(docId.id, updatedDocument);
     return updatedDocument;

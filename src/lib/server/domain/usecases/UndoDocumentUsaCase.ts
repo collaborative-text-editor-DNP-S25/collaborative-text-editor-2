@@ -6,7 +6,7 @@ export default class UndoDocumentUseCase {
   constructor(
     private documentRepo: DocumentRepository,
     private socketRepo: SocketRepository,
-  ) { }
+  ) {}
 
   invoke(docId: DocumentId): void {
     try {
