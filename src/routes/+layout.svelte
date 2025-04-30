@@ -8,4 +8,8 @@
   } = $props();
 </script>
 
+<svelte:head>
+  <title>DNP / Project 20.C</title>
+</svelte:head>
+
 {@render props.children()}

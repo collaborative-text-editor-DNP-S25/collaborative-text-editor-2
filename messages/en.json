@@ -1,4 +1,10 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "hello_world": "Hello, {name} from en!"
+
+  "back": "Back",
+  "refresh": "Refresh",
+  "newDocument": "New Document",
+  "undo": "Undo",
+  "redo": "Redo",
+  "documentNotFound": "This document doesn’t exist."
 }
