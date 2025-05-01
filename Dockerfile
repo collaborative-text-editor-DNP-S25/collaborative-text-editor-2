@@ -22,4 +22,4 @@ COPY ./ ./
 # Build application
 RUN pnpm build
 
-CMD ["pnpm", "preview", "--host"]
+CMD ["pnpm", "preview"]
