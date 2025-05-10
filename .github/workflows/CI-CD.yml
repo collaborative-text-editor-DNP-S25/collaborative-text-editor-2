@@ -41,9 +41,46 @@ jobs:
       - name: Deploy to Server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: 193.176.158.107
+          username: diluk
+          key: -----BEGIN OPENSSH PRIVATE KEY-----
+            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
+            -----END OPENSSH PRIVATE KEY-----
           script: |
             cd /collaborative-text-editor-2
             docker-compose pull
