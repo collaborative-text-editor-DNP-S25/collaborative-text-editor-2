@@ -6,20 +6,17 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Build stage
 FROM base AS build
 WORKDIR /app/
-
-# Set environment variables
 ENV NODE_ENV=production
-
-# Copy package files first for better layer caching
 COPY pnpm-lock.yaml package.json ./
-
-# Install production-only dependencies
 RUN pnpm install --frozen-lockfile --prod=false
-
-# Copy source files
 COPY ./ ./
-
-# Build application
 RUN pnpm build
 
-CMD ["pnpm", "preview"]
+# Run stage
+FROM base AS run
+WORKDIR /app/
+COPY --from=build /app/build /app/build
+COPY --from=build /app/package.json /app/package.json
+COPY --from=build /app/pnpm-lock.yaml /app/pnpm-lock.yaml
+RUN pnpm install --prod --frozen-lockfile
+CMD ["node", "build/index.js"]
