@@ -113,7 +113,8 @@ class ClientApi {
 }
 
 // Svelte's $state for reactive store management
-export const api = $state(new ClientApi("http://localhost:8952/"));
+const serverUrl = `${window.location.protocol}//${window.location.hostname}:8952`;
+export const api = $state(new ClientApi(serverUrl));
 
 // Reactive document list synchronized with server state
 export const documentIds = $state({ value: [] as DocumentId[] });
