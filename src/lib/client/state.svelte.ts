@@ -21,7 +21,7 @@ class ClientApi {
     this.io = io(serverUrl, {
       autoConnect: true, // Automatically establish connection on creation
       reconnection: true, // Enable automatic reconnection attempts
-      transports: ["websocket"], // Force WebSocket transport only
+      transports: ["websocket", "polling"], // Force WebSocket transport only
     });
     this.setupSocketHandlers();
   }
