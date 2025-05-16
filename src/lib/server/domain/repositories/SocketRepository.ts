@@ -16,8 +16,4 @@ export default interface SocketRepository {
   unregisterClient(client: SocketClient, docId: DocumentId): Promise<void>;
   sendAllDocuments(client: SocketClient, documentIds: DocumentId[]): void;
   sendDocument(client: SocketClient, documentContent: ResponseMessage): void;
-  sendVersionHistory(
-    clinet: SocketClient,
-    versionHistory: VersionEntry[],
-  ): void;
 }
