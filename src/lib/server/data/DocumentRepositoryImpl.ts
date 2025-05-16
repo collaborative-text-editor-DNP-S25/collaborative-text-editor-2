@@ -12,8 +12,6 @@ const pool = new Pool({ /* your PostgreSQL config */ });
 
 // Implementation of the Document Repo functionality
 export default class DocumentRepositoryImpl implements DocumentRepository {
-  private id = 0; // Simple counter-based ID generation
-  private documents = new Map<string, DocumentEntity>(); // In-memory document storage (on RAM of localhost)
   private readonly ERROR_DOC_ID: DocumentId = { id: "doc-errorId" }; // Uniform type of non-existent/error document
 
   async createDocument(): Promise<DocumentId> {
