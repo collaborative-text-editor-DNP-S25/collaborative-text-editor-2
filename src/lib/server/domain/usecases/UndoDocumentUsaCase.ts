@@ -8,9 +8,9 @@ export default class UndoDocumentUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  invoke(docId: DocumentId): void {
+  async invoke(docId: DocumentId): Promise<void> {
     try {
-      const document = this.documentRepo.undo(docId);
+      const document = await this.documentRepo.undo(docId);
 
       if (document === undefined) {
         // Broadcast failure to all clients in the document's room

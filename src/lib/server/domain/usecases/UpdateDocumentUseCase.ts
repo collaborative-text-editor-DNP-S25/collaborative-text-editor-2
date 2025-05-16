@@ -12,8 +12,8 @@ export default class UpdateDocumentUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  invoke(docId: DocumentId, newContent: DocumentContent): void {
-    const document = this.documentRepo.getDocument(docId);
+  async invoke(docId: DocumentId, newContent: DocumentContent): Promise<void> {
+    const document = await this.documentRepo.getDocument(docId);
 
     if (document === undefined) {
       // Broadcast failure to all clients in the document's room

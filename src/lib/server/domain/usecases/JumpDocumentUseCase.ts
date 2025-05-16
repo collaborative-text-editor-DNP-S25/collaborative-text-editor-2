@@ -9,8 +9,8 @@ export default class JumpDocumentUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  invoke(docId: DocumentId, verIndex: versionIndex): void {
-    const document = this.documentRepo.jump(docId, verIndex);
+  async invoke(docId: DocumentId, verIndex: versionIndex): Promise<void> {
+    const document = await this.documentRepo.jump(docId, verIndex);
 
     if (document === undefined) {
       // Broadcast failure to all clients in the document's room

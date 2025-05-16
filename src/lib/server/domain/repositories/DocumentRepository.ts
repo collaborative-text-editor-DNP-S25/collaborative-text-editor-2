@@ -7,14 +7,14 @@ import {
 // Interface defining operations for documents
 export default interface DocumentRepository {
   // Core CRUD operations
-  createDocument(): DocumentId;
-  updateDocument(docId: DocumentId, document: DocumentEntity): void;
-  deleteDocument(docId: DocumentId): DocumentId;
-  undo(docId: DocumentId): DocumentEntity | undefined;
-  redo(docId: DocumentId): DocumentEntity | undefined;
+  createDocument(): Promise<DocumentId>;
+  updateDocument(docId: DocumentId, document: DocumentEntity): Promise<void>;
+  deleteDocument(docId: DocumentId):  Promise<DocumentId>;
+  undo(docId: DocumentId): Promise<DocumentEntity | undefined>;
+  redo(docId: DocumentId): Promise<DocumentEntity | undefined>;
 
-  getDocument(docId: DocumentId): DocumentEntity | undefined;
-  getAllDocuments(): DocumentId[];
-  getVersionHistory(docId: DocumentId): VersionEntry[];
-  jump(docId: DocumentId, versionIndex: number): DocumentEntity | undefined;
+  getDocument(docId: DocumentId): Promise<DocumentEntity | undefined>;
+  getAllDocuments():  Promise<DocumentId[]>;
+  getVersionHistory(docId: DocumentId):  Promise<VersionEntry[]>;
+  jump(docId: DocumentId, versionIndex: number):  Promise<DocumentEntity | undefined>;
 }

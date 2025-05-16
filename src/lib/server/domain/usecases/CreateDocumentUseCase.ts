@@ -4,8 +4,8 @@ import type DocumentRepository from "$lib/server/domain/repositories/DocumentRep
 export default class CreateDocumentUseCase {
   constructor(private documentRepo: DocumentRepository) {}
 
-  invoke(): DocumentId {
-    const id = this.documentRepo.createDocument();
+  async invoke(): Promise<DocumentId> {
+    const id = await this.documentRepo.createDocument();
     return id;
   }
 }

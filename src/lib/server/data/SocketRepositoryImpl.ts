@@ -34,12 +34,6 @@ export default class SocketRepositoryImpl implements SocketRepository {
     this.io.to(client.id).emit("sendDocument", documentContent);
   }
 
-  sendVersionHistory(
-    client: SocketClient,
-    versionHistory: VersionEntry[],
-  ): void {
-    this.io.to(client.id).emit("sendVersionHistory", versionHistory);
-  }
 
   async registerClient(client: SocketClient, docId: DocumentId): Promise<void> {
     // Join document room and store metadata

@@ -10,8 +10,8 @@ export default class GetDocumentUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  invoke(client: SocketClient, docId: DocumentId): DocumentEntity | undefined {
-    const doc = this.documentRepo.getDocument(docId);
+  async invoke(client: SocketClient, docId: DocumentId): Promise<DocumentEntity | undefined> {
+    const doc = await this.documentRepo.getDocument(docId);
     if (doc == null) {
       return;
     } else {

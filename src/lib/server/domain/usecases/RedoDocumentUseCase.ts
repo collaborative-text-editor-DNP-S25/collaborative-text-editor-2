@@ -8,9 +8,9 @@ export default class RedoDocumentUseCase {
     private socketRepo: SocketRepository,
   ) {}
 
-  invoke(docId: DocumentId): void {
+  async invoke(docId: DocumentId): Promise<void> {
     try {
-      const document = this.documentRepo.redo(docId);
+      const document = await this.documentRepo.redo(docId);
 
       if (document === undefined) {
         // Broadcast failure to all clients in the document's room
